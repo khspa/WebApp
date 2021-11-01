@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
-
+import { AiOutlineClose } from 'react-icons/ai'
+import { BsFillEyeSlashFill, BsFillEyeFill } from 'react-icons/bs'
+import './NormalForm.scss'
 
 /* -------------------------------------------------------------------------- */
 /*                                 Validations                                */
@@ -75,7 +77,7 @@ function NormalForm( {children} ) {
             return child
         }
     })
-    
+
     const handleSubmit = e=>{
         e.preventDefault()
         console.log(data)
@@ -99,10 +101,14 @@ function Input({
     placeholder,
     validation,
     setData,
-    setErrors
+    setErrors,
+    prefix,
+    clearData,
+    hideData,
 }) {
 
     const inputRef = useRef("")
+    const [hide, setHide] = useState(true)
 
     const handleChange = event=>{
         setData(data=>{return {
@@ -110,13 +116,32 @@ function Input({
         }})
     }
 
+    const handleHide = ()=>{
+        if(inputRef.current.type==="text"){
+            inputRef.current.type = "password"
+        } else {
+            inputRef.current.type = "text"
+        }
+        setHide(!hide)
+    }
+
+    const handleClear = ()=>{
+        inputRef.current.value = ""
+        setData(data=>{return {
+            ...data, [name]:""
+        }})
+    }
+
     //run valiation whenever value has changed
     useEffect(() => {
         
-        //initialize input field
+        //initialize fields
         if(!inputRef.current.value){
             setData(data=>{return {
                 ...data, [name]:""
+            }})
+            setErrors(data=>{return {
+                ...data, [name]:[]
             }})
         }
 
@@ -133,14 +158,46 @@ function Input({
     }, [name, setData, setErrors, inputRef.current.value, validation])
 
     return (
-        <input 
+        <div id={`${name}-field`} className="input-group">
+            {prefix}
+            <input 
             ref={inputRef} 
             name={name} 
             type={type} 
             placeholder={placeholder} 
             onChange={handleChange}
-        />
-    )
+             />
+            {clearData && <span onClick={handleClear}>  <AiOutlineClose/> </span>}
+            {hideData && <span onClick={handleHide}> {hide ? <BsFillEyeSlashFill/> : <BsFillEyeFill/> } </span>}
+            <div className="message"></div>
+        </div>
+    )     
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Divider                                  */
+/* -------------------------------------------------------------------------- */
+
+function Item({children, setData, setErrors}) {
+
+    const childrenWithProps = React.Children.map(children, child=>{
+        if(React.isValidElement(child)){
+            //pass setData and setErrors props to children if they have name
+            if(child.props.name){
+                return React.cloneElement(child, {...child.props, setData, setErrors})
+            }
+            //return if child does not have name
+            else{
+                return child
+            }
+        }
+        //return if child is not a component (probaly plain text)
+        else{
+            return child
+        }
+    })
+
+    return <div className="divider">{childrenWithProps}</div>
 }
 
 /* -------------------------------------------------------------------------- */
@@ -152,7 +209,7 @@ function Submit() {
 }
 
 /* -------------------------------------------------------------------------- */
-/*                                  checkBox                                  */
+/*                                  CheckBox                                  */
 /* -------------------------------------------------------------------------- */
 
 function CheckBox({name, setData, defaultCheck}) {
@@ -187,6 +244,7 @@ function CheckBox({name, setData, defaultCheck}) {
 /* -------------------------------------------------------------------------- */
 
 NormalForm.Input = Input
+NormalForm.Item = Item
 NormalForm.CheckBox = CheckBox
 NormalForm.Submit = Submit
 
