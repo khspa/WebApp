@@ -1,14 +1,37 @@
-@import 'variables.scss';
+@import "variables.scss";
 
 .bg {
-    width: 100%;
-    height: 100%;
-    @include flex-center(column);
+  width: 100%;
+  height: fit-content;
+  padding: 5%;
+  position: absolute;
+  top: -10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+
+  .form-container {
+    @include flex-center(row);
+    position: relative;
+    width: 400px;
+    height: 550px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+  }
+}
+
+.btn-container {
+  border-radius: 12px;
+}
+
+@media screen and (max-width: 500px) {
+  .bg {
+    top: -4%;
+    padding: 0;
 
     .form-container {
-        @include flex-center(row);
-        position: relative;
-        width: 350px;
-        height: 550px;
+      top: 45px;
     }
+  }
 }

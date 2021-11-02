@@ -221,7 +221,7 @@ function Input({
     )     
 }
 
-function Submit() {
+function Submit({children}) {
 
     const ClearAnimation = () => {
         const inputFields = document.querySelectorAll(".input-group.shake-animation")
@@ -231,7 +231,7 @@ function Submit() {
         )
     }
 
-    return <input onClick={ClearAnimation} className="submit-btn" type='submit'/>
+    return <input onClick={ClearAnimation} className="submit-btn" type='submit' value={children}/>
 }
 
 function CheckBox({name, label, setData, defaultCheck}) {

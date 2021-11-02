@@ -1,129 +1,132 @@
-@import 'variables.scss';
+@import "variables.scss";
 
 $contentStyles: space-between, space-around, center, flex-start, flex-end;
 
 .form-bx {
-    height:100%;
-    width:100%;
-    display: flex;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  border-radius: 14px;
+  padding: 8%;
+  @include flex-center(column);
+
+  .form-title {
     @include flex-center(column);
+    height: fit-content;
+    width: 100%;
+    margin-bottom: 10px;
 
-    .form-title {
-        @include flex-center(column);
-        height: fit-content;
-        width: 100%;
-        margin-bottom: 10px;
-
-        img {
-            padding: 20px;
-            height: 200px;
-            width: 200px;
-        }
-
-        h1 {
-            text-align: center;
-            font-size: 2.2rem;
-            color:rgb(57, 140, 218);
-            height: fit-content;
-            text-transform: uppercase;
-        }
+    img {
+      padding: 20px;
+      height: 200px;
+      width: 200px;
     }
 
-    .divider {
-        width:100%;
-        margin: 5px 10px;
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        flex-direction: row;
+    h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      color: rgb(57, 140, 218);
+      height: fit-content;
+      text-transform: uppercase;
     }
+  }
 
-    @each $style in $contentStyles {
-        .#{$style} {
-            justify-content: $style;
-        }
+  .divider {
+    width: 100%;
+    margin: 5px 10px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    flex-direction: row;
+  }
+
+  @each $style in $contentStyles {
+    .#{$style} {
+      justify-content: $style;
     }
+  }
 }
 
 $borderRadius: 5px;
-$Bxheight: 35px;
+$Bxheight: 38px;
 .input-group {
-    height: $Bxheight;
+  height: $Bxheight;
+  width: 100%;
+  display: flex;
+  position: relative;
+  align-items: center;
+  border: 1px solid rgb(146, 141, 141);
+  border-radius: $borderRadius;
+  background-color: white;
+
+  span {
+    color: grey;
+    flex: 1;
+    font-size: 1.2rem;
+    @include flex-center(column);
+  }
+
+  .suffix {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  input {
+    font-size: 1.02rem;
+    height: 100%;
     width: 100%;
-    display: flex;
-    position: relative;
-    align-items: center;
-    border: 1px solid rgb(146, 141, 141);
+    flex: 10;
+    border: none;
     border-radius: $borderRadius;
+    padding: 2px 10px;
 
-    span {
-        color: grey;
-        flex: 1;
-        @include flex-center(column);
+    &:focus {
+      outline: none;
     }
+  }
 
-    .suffix {
-        &:hover {
-            cursor: pointer;
-        }
-    } 
-
-    input {
-        font-size: 1.02rem;
-        height: 100%;
-        width: 100%;
-        flex: 10;
-        border: none;
-        border-radius: $borderRadius;
-        padding: 2px 10px;
-
-        &:focus {
-            outline: none;
-        }
-    }
-
-    .message {
-        color: rgb(233, 34, 34);
-        font-size: 0.9rem;
-        position: absolute;
-        top: $Bxheight;
-    }
+  .message {
+    color: rgb(233, 34, 34);
+    font-size: 0.9rem;
+    position: absolute;
+    top: $Bxheight;
+  }
 }
 
 .check-bx {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    input {
-        height: 15px;
-        width: 15px;
-        margin: 0px 5px;
-    }
-    
-    span {
-        font-size: 1rem;
-    }
+  input {
+    height: 15px;
+    width: 15px;
+    margin: 0px 5px;
+  }
+
+  label {
+    font-size: 1.1rem;
+  }
 }
 
 .submit-btn {
-    padding: 1%;
-    font-size: 1rem;
-    height: fit-content;
-    height: $Bxheight;
-    width: 100%;
-    border: none;
-    border-radius: 8px;
-    background-color: rgb(57, 140, 218);
-    color: white;
-    font-weight: 600;
-    transition: background-color 0.25s ease-in-out;
+  padding: 1%;
+  font-size: 1.3rem;
+  height: $Bxheight;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background-color: rgb(57, 140, 218);
+  color: white;
+  font-weight: 600;
+  transition: background-color 0.25s ease-in-out;
 
-    &:hover {
-        cursor: pointer;
-        background-color: rgb(101, 164, 223);
-    }
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(101, 164, 223);
+  }
 }
 
 .shake-animation {
-    animation: shake .8s ease-in;
+  animation: shake 0.8s ease-in;
 }

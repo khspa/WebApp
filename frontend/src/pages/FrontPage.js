@@ -3,14 +3,20 @@ import NormalForm from '../components/Form/NormalForm'
 import Divider from '../components/Others/Divider'
 import { ButtonContainer, Button } from '../components/Others/ButtonLink'
 import { FcGoogle } from 'react-icons/fc'
-import { FaFacebookF } from 'react-icons/fa'
+import { FaFacebookF, FaUser } from 'react-icons/fa'
 import { BsTwitter } from 'react-icons/bs'
+import { AiFillLock } from 'react-icons/ai'
+import CircleButton from 'components/Others/Button'
 import './FrontPage.scss'
 
 function FrontPage() {
     return (
         <div className="bg">
+
+            <CircleButton>Sign Up</CircleButton>
+
             <div className="form-container">
+                
                 <NormalForm>
 
                     <NormalForm.Title 
@@ -19,7 +25,8 @@ function FrontPage() {
                     />
 
                     <NormalForm.Item>
-                        <NormalForm.Input 
+                        <NormalForm.Input
+                            prefix={<FaUser/>}
                             name='username'
                             type='text' 
                             placeholder='username'
@@ -29,7 +36,8 @@ function FrontPage() {
                     </NormalForm.Item>
 
                     <NormalForm.Item>
-                        <NormalForm.Input 
+                        <NormalForm.Input
+                            prefix={<AiFillLock/>}
                             name='password' 
                             type='password' 
                             placeholder='password'
@@ -39,12 +47,12 @@ function FrontPage() {
                     </NormalForm.Item>
 
                     <NormalForm.Item layout="space-between">
-                        <NormalForm.CheckBox name="remember" label="remember me"/>
+                        <NormalForm.CheckBox name="remember" label="Remember Me" defaultCheck={true}/>
                         <a href="/">forgot username/password?</a>
                     </NormalForm.Item>
 
                     <NormalForm.Item layout="flex-start">
-                        <NormalForm.Submit/>
+                        <NormalForm.Submit>Login</NormalForm.Submit>
                     </NormalForm.Item>
 
                 </NormalForm>
@@ -74,6 +82,7 @@ function FrontPage() {
                 </Button>
             </ButtonContainer>
         </div>
+        
     )
 }
 
