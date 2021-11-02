@@ -4,13 +4,22 @@ import { BsFillEyeSlashFill, BsFillEyeFill } from 'react-icons/bs'
 import './NormalForm.scss'
 
 /* -------------------------------------------------------------------------- */
+/*                                    style                                   */
+/* -------------------------------------------------------------------------- */
+
+const focusStyle = "1px solid rgb(61, 137, 207)"
+const focusShadow = "0px 0px 6px 1px rgb(89, 175, 255)"
+const outFocusStyle = "1px solid rgb(146, 141, 141)"
+const dangerStyle = "1px solid rgb(233, 34, 34)"
+const dangerShadow = "0px 0px 6px 1px rgb(235, 65, 65)"
+
+/* -------------------------------------------------------------------------- */
 /*                                 Validations                                */
 /* -------------------------------------------------------------------------- */
 
 function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
-
 const checkBlank = v=> !v || /^\s*$/.test(v)
 const checkExceed = (v, l)=> v.length > l
 const checkInclude = (v, reg)=> {
@@ -61,7 +70,6 @@ function validate(value, validation) {
     return errorMessages
 }
 
-
 /* -------------------------------------------------------------------------- */
 /*                               Form Component                               */
 /* -------------------------------------------------------------------------- */
@@ -81,19 +89,38 @@ function NormalForm( {children} ) {
     const handleSubmit = e=>{
         e.preventDefault()
         console.log(data)
-        console.log(errors)
+        for(const field in errors) {
+
+            const targetBx = document.getElementById(`${field}-bx`)
+            const targetMe = document.getElementById(`${field}-me`)
+
+            if(errors[field][0]){
+                targetBx.classList.add("shake-animation")
+                targetBx.style.border = dangerStyle
+                targetMe.innerHTML = errors[field][0]
+            }
+            else{
+                targetBx.style.border = outFocusStyle
+                targetMe.innerHTML = ""
+            }
+        }
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="form-bx" onSubmit={handleSubmit}>
             {childrenWithProps}
         </form>
     )
 }
 
-/* -------------------------------------------------------------------------- */
-/*                                    Input                                   */
-/* -------------------------------------------------------------------------- */
+function Title( {logo, title} ) {
+    return (
+        <div className="form-title">
+            {logo}
+            <h1> {title} </h1>           
+        </div>
+    )
+}
 
 function Input({
     name,
@@ -108,6 +135,7 @@ function Input({
 }) {
 
     const inputRef = useRef("")
+    const outlineRef = useRef("")
     const [hide, setHide] = useState(true)
 
     const handleChange = event=>{
@@ -130,6 +158,23 @@ function Input({
         setData(data=>{return {
             ...data, [name]:""
         }})
+    }
+
+    const handleFocus = ()=>{
+        if(outlineRef.current.style.border===dangerStyle){
+            outlineRef.current.style.boxShadow=dangerShadow
+        }
+        else{
+            outlineRef.current.style.border=focusStyle
+            outlineRef.current.style.boxShadow = focusShadow
+        }
+    }
+
+    const handleBlur = ()=>{
+        if(outlineRef.current.style.border!==dangerStyle){
+            outlineRef.current.style.border=outFocusStyle
+        }
+        outlineRef.current.style.boxShadow = 'none'
     }
 
     //run valiation whenever value has changed
@@ -158,61 +203,38 @@ function Input({
     }, [name, setData, setErrors, inputRef.current.value, validation])
 
     return (
-        <div id={`${name}-field`} className="input-group">
-            {prefix}
+        <div id={`${name}-bx`} ref={outlineRef} className="input-group">
+            {prefix && <span className="prefix"> {prefix} </span>}
             <input 
-            ref={inputRef} 
-            name={name} 
-            type={type} 
-            placeholder={placeholder} 
-            onChange={handleChange}
+                ref={inputRef} 
+                name={name} 
+                type={type} 
+                placeholder={placeholder} 
+                onChange={handleChange}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
              />
-            {clearData && <span onClick={handleClear}>  <AiOutlineClose/> </span>}
-            {hideData && <span onClick={handleHide}> {hide ? <BsFillEyeSlashFill/> : <BsFillEyeFill/> } </span>}
-            <div className="message"></div>
+            {clearData && <span className="suffix" onClick={handleClear}>  <AiOutlineClose/> </span>}
+            {hideData && <span className="suffix" onClick={handleHide}> {hide ? <BsFillEyeSlashFill/> : <BsFillEyeFill/> } </span>}
+            <div id={`${name}-me`} className="message"></div>
         </div>
     )     
 }
 
-/* -------------------------------------------------------------------------- */
-/*                                   Divider                                  */
-/* -------------------------------------------------------------------------- */
-
-function Item({children, setData, setErrors}) {
-
-    const childrenWithProps = React.Children.map(children, child=>{
-        if(React.isValidElement(child)){
-            //pass setData and setErrors props to children if they have name
-            if(child.props.name){
-                return React.cloneElement(child, {...child.props, setData, setErrors})
-            }
-            //return if child does not have name
-            else{
-                return child
-            }
-        }
-        //return if child is not a component (probaly plain text)
-        else{
-            return child
-        }
-    })
-
-    return <div className="divider">{childrenWithProps}</div>
-}
-
-/* -------------------------------------------------------------------------- */
-/*                                   Submit                                   */
-/* -------------------------------------------------------------------------- */
-
 function Submit() {
-    return <input type='submit'/>
+
+    const ClearAnimation = () => {
+        const inputFields = document.querySelectorAll(".input-group.shake-animation")
+        inputFields
+        .forEach(element=>
+            element && element.classList.remove('shake-animation')
+        )
+    }
+
+    return <input onClick={ClearAnimation} className="submit-btn" type='submit'/>
 }
 
-/* -------------------------------------------------------------------------- */
-/*                                  CheckBox                                  */
-/* -------------------------------------------------------------------------- */
-
-function CheckBox({name, setData, defaultCheck}) {
+function CheckBox({name, label, setData, defaultCheck}) {
 
     const inputRef = useRef("")
 
@@ -236,14 +258,52 @@ function CheckBox({name, setData, defaultCheck}) {
         }})
     }
 
-    return <input ref={inputRef} name={name} type='checkbox' onChange={handleChange}/>
+    return (
+        <div className="check-bx">
+            <input 
+                ref={inputRef} 
+                name={name} 
+                type='checkbox' 
+                onChange={handleChange}
+            />
+            <label>{label}</label>
+        </div>
+    )
+    
 }
 
 /* -------------------------------------------------------------------------- */
-/*                                   export                                   */
+/*                                   Divider                                  */
+/* -------------------------------------------------------------------------- */
+
+function Item({children, layout, setData, setErrors}) {
+
+    const childrenWithProps = React.Children.map(children, child=>{
+        if(React.isValidElement(child)){
+            //pass setData and setErrors props to children if they have name
+            if(child.props.name){
+                return React.cloneElement(child, {...child.props, setData, setErrors})
+            }
+            //return if child does not have name
+            else{
+                return child
+            }
+        }
+        //return if child is not a component (probaly plain text)
+        else{
+            return child
+        }
+    })
+
+    return <div className={ layout ? `divider ${layout}` : "divider space-around" }>{childrenWithProps}</div>
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Export                                   */
 /* -------------------------------------------------------------------------- */
 
 NormalForm.Input = Input
+NormalForm.Title = Title
 NormalForm.Item = Item
 NormalForm.CheckBox = CheckBox
 NormalForm.Submit = Submit
