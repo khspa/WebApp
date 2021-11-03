@@ -6,14 +6,32 @@ import { FcGoogle } from 'react-icons/fc'
 import { FaFacebookF, FaUser } from 'react-icons/fa'
 import { BsTwitter } from 'react-icons/bs'
 import { AiFillLock } from 'react-icons/ai'
+import { IoLanguage } from 'react-icons/io5'
 import CircleButton from 'components/Others/Button'
 import './FrontPage.scss'
+import AnimatedBg from 'components/Background/AnimatedBg'
 
 function FrontPage() {
     return (
-        <div className="bg">
+        <>
+            <AnimatedBg/>
+
+            <div className="bg">
+
+            <div className="graph left">
+                <img alt="person" src={process.env.PUBLIC_URL + 'partying.svg'} />
+            </div>
+
+            <div className="graph right">
+                <img alt="person" src={process.env.PUBLIC_URL + 'withlove.svg'} />
+            </div>
+
+            <div className="locale">
+                <IoLanguage/>
+            </div>
 
             <CircleButton>Sign Up</CircleButton>
+                
 
             <div className="form-container">
                 
@@ -52,36 +70,38 @@ function FrontPage() {
                     </NormalForm.Item>
 
                     <NormalForm.Item layout="flex-start">
-                        <NormalForm.Submit>Login</NormalForm.Submit>
+                        <NormalForm.Submit>Sign In</NormalForm.Submit>
                     </NormalForm.Item>
 
                 </NormalForm>
             </div>
-            <Divider>Or sign in with</Divider>
-            <ButtonContainer>
-                <Button 
-                    bgColor="#db3236" 
-                    prefix={<FcGoogle/>}
-                    textColor="white"
-                >
-                    Continue with Google
-                </Button>
-                <Button 
-                    bgColor="#1778F2"
-                    prefix={<FaFacebookF style={{color:'#1778F2'}}/>}
-                    textColor="white"
-                >
-                    Continue with Facebook
-                </Button>
-                <Button
-                    bgColor="#1DA1F2"
-                    prefix={<BsTwitter style={{color:"#1DA1F2"}}/>}
-                    textColor="white"
-                >
-                    Continue with Twitter
-                </Button>
-            </ButtonContainer>
-        </div>
+                <Divider>Or sign in with</Divider>
+                <ButtonContainer>
+                    <Button 
+                        bgColor="#db3236" 
+                        prefix={<FcGoogle/>}
+                        textColor="white"
+                    >
+                        Continue with Google
+                    </Button>
+                    <Button 
+                        bgColor="#1778F2"
+                        prefix={<FaFacebookF style={{color:'#1778F2'}}/>}
+                        textColor="white"
+                    >
+                        Continue with Facebook
+                    </Button>
+                    <Button
+                        bgColor="#1DA1F2"
+                        prefix={<BsTwitter style={{color:"#1DA1F2"}}/>}
+                        textColor="white"
+                    >
+                        Continue with Twitter
+                    </Button>
+                </ButtonContainer>
+            </div>
+        </>
+        
         
     )
 }

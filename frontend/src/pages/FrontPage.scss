@@ -1,5 +1,39 @@
 @import "variables.scss";
 
+.locale {
+    position: fixed;
+    width: 100%;
+    font-size: 2rem;
+    padding: 20px;
+    top: 0;
+    color: #333;
+    z-index: 5;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.graph {
+    bottom: -20px;
+    position: absolute;
+    z-index: 5;
+
+    img {
+        height: 350px;
+        width: 350px;
+        object-fit: fill;
+    }
+}
+
+.left {
+    left: 5vw;
+}
+
+.right {
+    right: 5vw;
+}
+
 .bg {
   width: 100%;
   height: fit-content;
@@ -9,15 +43,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-x: hidden;
+  overflow: hidden;
 
   .form-container {
     @include flex-center(row);
     position: relative;
     width: 400px;
     height: 550px;
-    margin-bottom: 20px;
     border-radius: 12px;
+    margin: 10px;
   }
 }
 
@@ -25,13 +59,29 @@
   border-radius: 12px;
 }
 
-@media screen and (max-width: 500px) {
-  .bg {
+@media screen and (max-width: 400px){
+    .locale {
+        color: rgb(233, 225, 225);
+    }
+}
+
+@media screen and (max-width: 1200px) {
+
+    .locale {
+       padding: 8px;
+    }
+
+    .graph {
+        display: none;
+    }
+
+    .bg {
     top: -4%;
     padding: 0;
 
+
     .form-container {
-      top: 45px;
+        top: 45px;
     }
-  }
+    }
 }

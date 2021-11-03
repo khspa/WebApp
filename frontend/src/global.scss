@@ -7,7 +7,7 @@
 html {
   font-size: 14px;
   color: #333;
-  height: 100vh;
+  height: fit-content;
   width: 100vw;
 }
 
@@ -15,7 +15,7 @@ body,
 #root,
 .App {
   width: 100%;
-  height: fit-content;
+  height: 100%;
 }
 
 body {

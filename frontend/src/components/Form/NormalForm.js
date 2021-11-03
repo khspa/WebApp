@@ -9,7 +9,7 @@ import './NormalForm.scss'
 
 const focusStyle = "1px solid rgb(61, 137, 207)"
 const focusShadow = "0px 0px 6px 1px rgb(89, 175, 255)"
-const outFocusStyle = "1px solid rgb(146, 141, 141)"
+const outFocusStyle = "1px solid rgb(226, 221, 221)"
 const dangerStyle = "1px solid rgb(233, 34, 34)"
 const dangerShadow = "0px 0px 6px 1px rgb(235, 65, 65)"
 

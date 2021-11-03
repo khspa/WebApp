@@ -4,7 +4,7 @@
   padding: 10px;
   width: 150px;
   height: fit-content;
-  background-color: rgb(64, 89, 172);
+  background-color: rgb(57, 140, 218);
   border-radius: 12px;
   position: absolute;
   z-index: 2;
@@ -32,6 +32,8 @@
     top: -13%;
     display: flex;
     justify-content: center;
+    right: auto;
+    left: auto;
 
     span {
       width: fit-content;
