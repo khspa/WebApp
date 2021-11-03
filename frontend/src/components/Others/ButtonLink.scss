@@ -3,7 +3,7 @@
 .btn-container {
   @include flex-center(column);
   width: auto;
-  min-width: 340px;
+  min-width: 300px;
   padding: 10px;
   margin-bottom: 0;
   z-index: 2;

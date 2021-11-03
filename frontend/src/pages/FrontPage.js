@@ -14,67 +14,57 @@ import AnimatedBg from 'components/Background/AnimatedBg'
 function FrontPage() {
     return (
         <>
-            <AnimatedBg/>
-
-            <div className="bg">
-
-            <div className="graph left">
-                <img alt="person" src={process.env.PUBLIC_URL + 'partying.svg'} />
-            </div>
-
-            <div className="graph right">
-                <img alt="person" src={process.env.PUBLIC_URL + 'withlove.svg'} />
-            </div>
-
             <div className="locale">
                 <IoLanguage/>
             </div>
 
             <CircleButton>Sign Up</CircleButton>
+
+            <div className="bg">
                 
+                <AnimatedBg/>
+                <div className="form-container">
+                    
+                    <NormalForm>
 
-            <div className="form-container">
-                
-                <NormalForm>
-
-                    <NormalForm.Title 
-                        logo={<img alt="logo" src={process.env.PUBLIC_URL + 'logo.svg'} />} 
-                        title="online loan platform"
-                    />
-
-                    <NormalForm.Item>
-                        <NormalForm.Input
-                            prefix={<FaUser/>}
-                            name='username'
-                            type='text' 
-                            placeholder='username'
-                            validation={{required: true}}
-                            clearData
+                        <NormalForm.Title 
+                            logo={<img alt="logo" src={process.env.PUBLIC_URL + 'logo.svg'} />} 
+                            title="online loan platform"
                         />
-                    </NormalForm.Item>
 
-                    <NormalForm.Item>
-                        <NormalForm.Input
-                            prefix={<AiFillLock/>}
-                            name='password' 
-                            type='password' 
-                            placeholder='password'
-                            validation={{required: true}}
-                            hideData
-                        />
-                    </NormalForm.Item>
+                        <NormalForm.Item>
+                            <NormalForm.Input
+                                prefix={<FaUser/>}
+                                name='username'
+                                type='text' 
+                                placeholder='username'
+                                validation={{required: true}}
+                                clearData
+                            />
+                        </NormalForm.Item>
 
-                    <NormalForm.Item layout="space-between">
-                        <NormalForm.CheckBox name="remember" label="Remember Me" defaultCheck={true}/>
-                        <a href="/">forgot username/password?</a>
-                    </NormalForm.Item>
+                        <NormalForm.Item>
+                            <NormalForm.Input
+                                prefix={<AiFillLock/>}
+                                name='password' 
+                                type='password' 
+                                placeholder='password'
+                                validation={{required: true}}
+                                hideData
+                            />
+                        </NormalForm.Item>
 
-                    <NormalForm.Item layout="flex-start">
-                        <NormalForm.Submit>Sign In</NormalForm.Submit>
-                    </NormalForm.Item>
+                        <NormalForm.Item layout="space-between">
+                            <NormalForm.CheckBox name="remember" label="Remember Me" defaultCheck={true}/>
+                            <a href="/">forgot username/password?</a>
+                        </NormalForm.Item>
 
-                </NormalForm>
-            </div>
+                        <NormalForm.Item layout="flex-start">
+                            <NormalForm.Submit>Sign In</NormalForm.Submit>
+                        </NormalForm.Item>
+
+                    </NormalForm>
+                </div>
                 <Divider>Or sign in with</Divider>
                 <ButtonContainer>
                     <Button 
@@ -99,6 +89,13 @@ function FrontPage() {
                         Continue with Twitter
                     </Button>
                 </ButtonContainer>
+                <div className="graph left">
+                    <img alt="person" src={process.env.PUBLIC_URL + 'partying.svg'} />
+                </div>
+
+                <div className="graph right">
+                    <img alt="person" src={process.env.PUBLIC_URL + 'withlove.svg'} />
+                </div>
             </div>
         </>
         
