@@ -1,20 +1,44 @@
 @import "variables.scss";
 
-.btn-container {
+.column {
   @include flex-center(column);
-  width: auto;
-  min-width: 300px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn-container {
+  width: 300px;
   padding: 10px;
   margin-bottom: 0;
   z-index: 2;
 
-  .link-btn {
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    margin: 12px;
+  .bar {
     height: 40px;
     width: 100%;
+    border-radius: 12px;
+  }
+
+  .circle {
+    border-radius: 50%;
+    height: 70px;
+    width: 70px;
+
+    span {
+      @include flex-center(column);
+    }
+
+    div {
+      display: none;
+    }
+  }
+
+  .link-btn {
+    margin: 12px;
+    display: flex;
+    align-items: center;
     box-shadow: 5px 5px 10px 3px grey;
     transition: all 0.3s ease-in-out;
 
@@ -42,5 +66,11 @@
       cursor: pointer;
       opacity: 0.8;
     }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .btn-container {
+    width: 100%;
   }
 }

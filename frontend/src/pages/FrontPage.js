@@ -70,8 +70,9 @@ function FrontPage() {
                     </NormalForm>
                 </div>
                 <Divider>Or sign in with</Divider>
-                <ButtonContainer>
-                    <Button 
+                <ButtonContainer direction="column">
+                    <Button
+                        shape="bar"
                         bgColor="#db3236" 
                         prefix={<FcGoogle/>}
                         textColor="white"
@@ -79,6 +80,7 @@ function FrontPage() {
                         Continue with Google
                     </Button>
                     <Button 
+                        shape="bar"
                         bgColor="#1778F2"
                         prefix={<FaFacebookF style={{color:'#1778F2'}}/>}
                         textColor="white"
@@ -86,6 +88,7 @@ function FrontPage() {
                         Continue with Facebook
                     </Button>
                     <Button
+                        shape="bar"
                         bgColor="#1DA1F2"
                         prefix={<BsTwitter style={{color:"#1DA1F2"}}/>}
                         textColor="white"
@@ -103,10 +106,10 @@ function FrontPage() {
             </div>
             <div className={`bg signup ${flip?"inactive":"active"}`}>
                 <CircleButton onClick={handleClick}>Sign In</CircleButton>
-                <AnimatedBg/>
+
                 <div className="form-container">
-                    
-                    <h1> Sign Up</h1>
+
+                    <h1> Sign Up </h1>
                     
                     <NormalForm>
                         <h2>  <FcDocument/> Basic Information </h2>
@@ -169,7 +172,32 @@ function FrontPage() {
                         <NormalForm.Item>
                             <NormalForm.Submit/>
                         </NormalForm.Item> 
+                        <h2> Or sign up with social Media</h2>
                     </NormalForm>
+
+                    <ButtonContainer direction="row">
+                        <Button
+                            shape="circle"
+                            bgColor="#db3236" 
+                            prefix={<FcGoogle/>}
+                            textColor="white"
+                        >
+                        </Button>
+                        <Button 
+                            shape="circle"
+                            bgColor="#1778F2"
+                            prefix={<FaFacebookF style={{color:'#1778F2'}}/>}
+                            textColor="white"
+                        >
+                        </Button>
+                        <Button
+                            shape="circle"
+                            bgColor="#1DA1F2"
+                            prefix={<BsTwitter style={{color:"#1DA1F2"}}/>}
+                            textColor="white"
+                        >
+                        </Button>
+                    </ButtonContainer>
 
                 </div>
             </div>

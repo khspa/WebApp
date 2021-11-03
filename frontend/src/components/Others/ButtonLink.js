@@ -1,18 +1,18 @@
 import React from 'react'
 import './ButtonLink.scss'
 
-export function ButtonContainer({children}) {
+export function ButtonContainer({children, direction}) {
     return (
-        <div className="btn-container">
+        <div className={`btn-container ${direction}`}>
             {children}
         </div>
     )
 }
 
-export function Button({prefix, children, bgColor, textColor}) {
+export function Button({prefix, children, bgColor, textColor, shape}) {
     return (
         <div 
-            className="link-btn" 
+            className={`link-btn ${shape}`} 
             style={
                     {
                         backgroundColor: bgColor,
@@ -21,7 +21,7 @@ export function Button({prefix, children, bgColor, textColor}) {
                     }
         >
             {prefix && <span> {prefix} </span>}
-            <div> {children} </div>
+            {children && <div> {children} </div>}
         </div>
     )
 }
