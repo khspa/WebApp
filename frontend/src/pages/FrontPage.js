@@ -205,6 +205,14 @@ function FrontPage() {
                         </Button>
                     </ButtonContainer>
                 </div>
+
+                <div className="graph left">
+                    <img alt="person" src={process.env.PUBLIC_URL + 'emails.svg'} />
+                </div>
+
+                <div className="graph right">
+                    <img alt="person" src={process.env.PUBLIC_URL + 'vault.svg'} />
+                </div>
                 
             </div>
             
