@@ -24,8 +24,8 @@ function FrontPage() {
                 <IoLanguage/>
             </div>
 
-            <CircleButton show={!flip} onClick={handleClick}>Sign In</CircleButton>
-            <CircleButton show={flip} onClick={handleClick}>Sign Up</CircleButton>
+            <CircleButton show={!flip} onClick={handleClick}>Sign Un</CircleButton>
+            <CircleButton show={flip} onClick={handleClick}>Sign In</CircleButton>
 
             <div className={`bg signin ${flip?"active":""}`}>
                 <AnimatedBg/>
