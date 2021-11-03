@@ -3,8 +3,8 @@ import './background.css'
 
 function AnimatedBg() {
     return (
-        <div class="wrapper">
-            <div class="box">
+        <div className="wrapper">
+            <div className="box">
                 <div></div>
                 <div></div>
                 <div></div>

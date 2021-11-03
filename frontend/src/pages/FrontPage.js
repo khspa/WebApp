@@ -1,27 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import NormalForm from '../components/Form/NormalForm'
 import Divider from '../components/Others/Divider'
 import { ButtonContainer, Button } from '../components/Others/ButtonLink'
 import { FcGoogle } from 'react-icons/fc'
 import { FaFacebookF, FaUser } from 'react-icons/fa'
 import { BsTwitter } from 'react-icons/bs'
-import { AiFillLock } from 'react-icons/ai'
+import { AiFillLock, AiFillMail } from 'react-icons/ai'
 import { IoLanguage } from 'react-icons/io5'
+import { BsLockFill, BsShieldLockFill} from 'react-icons/bs'
+import { FcDocument, FcSignature } from 'react-icons/fc'
 import CircleButton from 'components/Others/Button'
 import './FrontPage.scss'
 import AnimatedBg from 'components/Background/AnimatedBg'
 
 function FrontPage() {
+
+    const [flip, setFlip] = useState(true)
+    const handleClick = () => setFlip(!flip)
+    
     return (
         <>
             <div className="locale">
                 <IoLanguage/>
             </div>
 
-            <CircleButton>Sign Up</CircleButton>
-
-            <div className="bg">
-                
+            <div className={`bg signin ${flip?"active":"inactive"}`}>
+                <CircleButton onClick={handleClick}>Sign Up</CircleButton>
                 <AnimatedBg/>
                 <div className="form-container">
                     
@@ -97,6 +101,79 @@ function FrontPage() {
                     <img alt="person" src={process.env.PUBLIC_URL + 'withlove.svg'} />
                 </div>
             </div>
+            <div className={`bg signup ${flip?"inactive":"active"}`}>
+                <CircleButton onClick={handleClick}>Sign In</CircleButton>
+                <AnimatedBg/>
+                <div className="form-container">
+                    
+                    <h1> Sign Up</h1>
+                    
+                    <NormalForm>
+                        <h2>  <FcDocument/> Basic Information </h2>
+                        <NormalForm.Item>
+                            <NormalForm.Input
+                                prefix={<FaUser/>}
+                                name="username"
+                                type="text"
+                                placeholder="Username"
+                                validation={{requied:true, exclude:"#$%^&*()_=-"}}
+                                clearData
+                            />
+                        </NormalForm.Item>
+                        <NormalForm.Item>
+                            <NormalForm.Input
+                                prefix={<AiFillMail/>}
+                                name="email"
+                                type="email"
+                                placeholder="Email"
+                                validation={{requied:true, email:true}}
+                                clearData
+                            />
+                        </NormalForm.Item>
+                        <NormalForm.Item>
+                            <NormalForm.Input
+                                name="firstName"
+                                type="text"
+                                validation={{requied:true, include:"A-Z"}}
+                                placeholder="First Name"
+                            />
+                            <NormalForm.Input
+                                name="lastName"
+                                type="email"
+                                placeholder="Last Name"
+                                validation={{requied:true, include:"A-Z"}}
+                            />
+                        </NormalForm.Item>
+                        <NormalForm.Item>
+                            <NormalForm.Input
+                                prefix={<BsLockFill/>}
+                                name="password"
+                                type="password"
+                                validation={{requied:true}}
+                                placeholder="Password"
+                                hideData
+                            />
+                            <NormalForm.Input
+                                prefix={<BsShieldLockFill/>}
+                                name="confirmPassword"
+                                type="password"
+                                placeholder="Confirm Password"
+                                validation={{requied:true}}
+                                hideData
+                            />
+                        </NormalForm.Item>
+                        <h2> <FcSignature/> Agreement </h2>
+                        <NormalForm.Item layout="flex-start">
+                            <NormalForm.CheckBox name="agreement" label={<span className="term">By signing, you agree to the Terms and Conditions of <a href="/">this</a> </span>}/>
+                        </NormalForm.Item>
+                        <NormalForm.Item>
+                            <NormalForm.Submit/>
+                        </NormalForm.Item> 
+                    </NormalForm>
+
+                </div>
+            </div>
+            
         </>
         
         

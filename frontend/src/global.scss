@@ -14,16 +14,11 @@ html {
 body,
 #root,
 .App {
+  perspective: 1000px;
   width: 100%;
   height: 100%;
 }
 
 body {
   background-image: rgb(238, 238, 238);
-}
-
-@media screen and (max-height: 750px) {
-  html {
-    height: fit-content;
-  }
 }

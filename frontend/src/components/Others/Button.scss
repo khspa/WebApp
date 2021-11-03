@@ -6,9 +6,9 @@
   height: fit-content;
   background-color: rgb(57, 140, 218);
   border-radius: 12px 0px 0px 12px;
-  position: fixed;
-  z-index: 2;
-  top: 30%;
+  position: absolute;
+  z-index: 3;
+  top: 15%;
   right: 0px;
   transition: all 0.3s ease-in-out;
 
@@ -29,7 +29,7 @@
     width: 100vw;
     height: 200px;
     border-radius: 50%;
-    top: -170px;
+    top: -130px;
     display: flex;
     justify-content: center;
     right: auto;
