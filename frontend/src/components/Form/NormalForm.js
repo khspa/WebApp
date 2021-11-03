@@ -276,7 +276,7 @@ function CheckBox({name, label, setData, defaultCheck}) {
 /*                                   Divider                                  */
 /* -------------------------------------------------------------------------- */
 
-function Item({children, layout, setData, setErrors}) {
+function Item({children, layout, setData, setErrors, style}) {
 
     const childrenWithProps = React.Children.map(children, child=>{
         if(React.isValidElement(child)){
@@ -295,7 +295,7 @@ function Item({children, layout, setData, setErrors}) {
         }
     })
 
-    return <div className={ layout ? `divider ${layout}` : "divider space-around" }>{childrenWithProps}</div>
+    return <div style={style} className={ layout ? `divider ${layout}` : "divider space-around" }>{childrenWithProps}</div>
 }
 
 /* -------------------------------------------------------------------------- */

@@ -6,11 +6,12 @@
   height: fit-content;
   background-color: rgb(57, 140, 218);
   border-radius: 12px 0px 0px 12px;
-  position: absolute;
+  position: fixed;
   z-index: 5;
   top: 15%;
   right: 0px;
-  transition: all 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
+  transition: transform 1.25s ease-in-out;
 
   span {
     color: white;
@@ -31,7 +32,6 @@
     border-radius: 50%;
     top: -160px;
     display: flex;
-    position: fixed;
     justify-content: center;
     right: auto;
     left: auto;

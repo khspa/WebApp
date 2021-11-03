@@ -4,7 +4,7 @@ import Divider from '../components/Others/Divider'
 import { ButtonContainer, Button } from '../components/Others/ButtonLink'
 import { FcGoogle } from 'react-icons/fc'
 import { FaFacebookF, FaUser } from 'react-icons/fa'
-import { BsTwitter } from 'react-icons/bs'
+import { BsTwitter, BsFillChatRightDotsFill } from 'react-icons/bs'
 import { AiFillLock, AiFillMail } from 'react-icons/ai'
 import { IoLanguage } from 'react-icons/io5'
 import { BsLockFill, BsShieldLockFill} from 'react-icons/bs'
@@ -15,7 +15,7 @@ import AnimatedBg from 'components/Background/AnimatedBg'
 
 function FrontPage() {
 
-    const [flip, setFlip] = useState(true)
+    const [flip, setFlip] = useState(false)
     const handleClick = () => setFlip(!flip)
     
     return (
@@ -24,8 +24,10 @@ function FrontPage() {
                 <IoLanguage/>
             </div>
 
-            <div className={`bg signin ${flip?"active":"inactive"}`}>
-                <CircleButton onClick={handleClick}>Sign Up</CircleButton>
+            <CircleButton style={flip? {transform: 'translateY(-80%)'}:{transform: 'translateY(0%)'}} onClick={handleClick}>Sign In</CircleButton>
+            <CircleButton style={flip? {transform: 'translateY(0%)'}:{transform: 'translateY(-80%)'}}  onClick={handleClick}>Sign Up</CircleButton>
+
+            <div className={`bg signin ${flip?"active":""}`}>
                 <AnimatedBg/>
                 <div className="form-container">
                     
@@ -104,22 +106,26 @@ function FrontPage() {
                     <img alt="person" src={process.env.PUBLIC_URL + 'withlove.svg'} />
                 </div>
             </div>
-            <div className={`bg signup ${flip?"inactive":"active"}`}>
-                <CircleButton onClick={handleClick}>Sign In</CircleButton>
-
+            <div className={`bg signup ${flip?"inactive":""}`}>
+                
                 <div className="form-container">
 
-                    <h1> Sign Up </h1>
-                    
+                    <div className="signup-title">
+                        <h1> Sign Up </h1>
+                    </div>
+
                     <NormalForm>
-                        <h2>  <FcDocument/> Basic Information </h2>
+                        <NormalForm.Item style={{height:'fit-content'}}>
+                            <h2>  <FcDocument/> Basic Information </h2>
+                        </NormalForm.Item>
+                        
                         <NormalForm.Item>
                             <NormalForm.Input
                                 prefix={<FaUser/>}
-                                name="username"
+                                name="register_username"
                                 type="text"
                                 placeholder="Username"
-                                validation={{requied:true, exclude:"#$%^&*()_=-"}}
+                                validation={{required:true, exclude:"#$%^&*()_=-"}}
                                 clearData
                             />
                         </NormalForm.Item>
@@ -129,50 +135,50 @@ function FrontPage() {
                                 name="email"
                                 type="email"
                                 placeholder="Email"
-                                validation={{requied:true, email:true}}
+                                validation={{required:true, email:true}}
                                 clearData
                             />
                         </NormalForm.Item>
                         <NormalForm.Item>
                             <NormalForm.Input
-                                name="firstName"
+                                prefix={<BsFillChatRightDotsFill/>}
+                                name="Name"
                                 type="text"
-                                validation={{requied:true, include:"A-Z"}}
-                                placeholder="First Name"
+                                validation={{required:true, include:"A-Z"}}
+                                placeholder="Name"
                             />
-                            <NormalForm.Input
-                                name="lastName"
-                                type="email"
-                                placeholder="Last Name"
-                                validation={{requied:true, include:"A-Z"}}
-                            />
+
                         </NormalForm.Item>
                         <NormalForm.Item>
                             <NormalForm.Input
                                 prefix={<BsLockFill/>}
-                                name="password"
+                                name="register_password"
                                 type="password"
-                                validation={{requied:true}}
+                                validation={{required:true}}
                                 placeholder="Password"
                                 hideData
                             />
+                        </NormalForm.Item>
+                        <NormalForm.Item>
                             <NormalForm.Input
                                 prefix={<BsShieldLockFill/>}
                                 name="confirmPassword"
                                 type="password"
+                                validation={{required:true}}
                                 placeholder="Confirm Password"
-                                validation={{requied:true}}
                                 hideData
                             />
                         </NormalForm.Item>
-                        <h2> <FcSignature/> Agreement </h2>
                         <NormalForm.Item layout="flex-start">
-                            <NormalForm.CheckBox name="agreement" label={<span className="term">By signing, you agree to the Terms and Conditions of <a href="/">this</a> </span>}/>
+                            <NormalForm.CheckBox name="agreement" label={<span className="term"> I agree to the <a href="/">Terms and Conditions</a>  </span>}/>
                         </NormalForm.Item>
                         <NormalForm.Item>
                             <NormalForm.Submit/>
-                        </NormalForm.Item> 
-                        <h2> Or sign up with social Media</h2>
+                        </NormalForm.Item>
+                        <NormalForm.Item>
+                            <h2> <FcSignature/> Or sign up with social media </h2>
+                        </NormalForm.Item>
+                        
                     </NormalForm>
 
                     <ButtonContainer direction="row">
@@ -198,8 +204,8 @@ function FrontPage() {
                         >
                         </Button>
                     </ButtonContainer>
-
                 </div>
+                
             </div>
             
         </>
