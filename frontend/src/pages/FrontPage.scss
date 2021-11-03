@@ -45,7 +45,7 @@
   .form-container {
     @include flex-center(row);
     position: relative;
-    width: 350px;
+    width: 450px;
     height: 480px;
     border-radius: 12px;
     margin: 10px;
@@ -169,7 +169,7 @@
   }
 }
 
-@media screen and (max-height: 750px) {
+@media screen and (max-height: 800px) {
   .form-bx {
     padding: 0;
   }
