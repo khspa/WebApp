@@ -1,10 +1,10 @@
 import React from 'react'
 import './Button.scss'
 
-function CircleButton({children, style, onClick}) {
+function CircleButton({children, show, onClick}) {
 
     return (
-        <div style={style} className="circle-btn" onClick={onClick}>
+        <div className={`circle-btn ${show ? "show":"hide"}`} onClick={onClick}>
             <span>{children}</span>
         </div>
     )

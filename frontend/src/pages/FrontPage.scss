@@ -126,6 +126,8 @@
 
 .btn-container {
   border-radius: 12px;
+  position: relative;
+  top: 0px;
 }
 
 @media screen and (max-width: 1200px) {
@@ -167,6 +169,19 @@
 }
 
 @media screen and (max-height: 750px) {
+  .form-bx {
+    padding: 0;
+  }
+
+  .signup {
+    .form-container {
+      background-color: white;
+      box-shadow: none;
+      border-radius: 0px;
+      height: 100%;
+    }
+  }
+
   .App {
     overflow-y: scroll;
   }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import NormalForm from '../components/Form/NormalForm'
 import Divider from '../components/Others/Divider'
 import { ButtonContainer, Button } from '../components/Others/ButtonLink'
@@ -24,8 +24,8 @@ function FrontPage() {
                 <IoLanguage/>
             </div>
 
-            <CircleButton style={flip? {transform: 'translateY(-80%)'}:{transform: 'translateY(0%)'}} onClick={handleClick}>Sign In</CircleButton>
-            <CircleButton style={flip? {transform: 'translateY(0%)'}:{transform: 'translateY(-80%)'}}  onClick={handleClick}>Sign Up</CircleButton>
+            <CircleButton show={!flip} onClick={handleClick}>Sign In</CircleButton>
+            <CircleButton show={flip} onClick={handleClick}>Sign Up</CircleButton>
 
             <div className={`bg signin ${flip?"active":""}`}>
                 <AnimatedBg/>
