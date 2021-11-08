@@ -1,0 +1,44 @@
+@import "variables.scss";
+
+.background {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(228, 228, 228);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .header,
+  .main-body,
+  .footer {
+    position: relative;
+    z-index: 2;
+  }
+
+  .header,
+  .footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+  }
+
+  .header {
+    justify-content: space-between;
+  }
+
+  .footer {
+    justify-content: center;
+  }
+
+  .main-body {
+    flex: 12;
+  }
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

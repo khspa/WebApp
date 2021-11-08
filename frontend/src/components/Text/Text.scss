@@ -1,0 +1,16 @@
+@import "variables.scss";
+
+.shallow-text {
+  margin: $itemMargin;
+  font-size: 1rem;
+  color: rgb(175, 170, 170);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.hyper-text {
+  font-size: 1rem;
+  margin: 5px;
+}

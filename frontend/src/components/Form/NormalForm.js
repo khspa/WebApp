@@ -4,16 +4,6 @@ import { BsFillEyeSlashFill, BsFillEyeFill } from 'react-icons/bs'
 import './NormalForm.scss'
 
 /* -------------------------------------------------------------------------- */
-/*                                    style                                   */
-/* -------------------------------------------------------------------------- */
-
-const focusStyle = "1px solid rgb(61, 137, 207)"
-const focusShadow = "0px 0px 6px 1px rgb(89, 175, 255)"
-const outFocusStyle = "1px solid rgb(226, 221, 221)"
-const dangerStyle = "1px solid rgb(233, 34, 34)"
-const dangerShadow = "0px 0px 6px 1px rgb(235, 65, 65)"
-
-/* -------------------------------------------------------------------------- */
 /*                                 Validations                                */
 /* -------------------------------------------------------------------------- */
 
@@ -74,7 +64,7 @@ function validate(value, validation) {
 /*                               Form Component                               */
 /* -------------------------------------------------------------------------- */
 
-function NormalForm( {children} ) {
+function NormalForm( {children, w} ) {
 
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
@@ -95,19 +85,21 @@ function NormalForm( {children} ) {
             const targetMe = document.getElementById(`${field}-me`)
 
             if(errors[field][0]){
+                targetBx.classList.remove("blur")
                 targetBx.classList.add("shake-animation")
-                targetBx.style.border = dangerStyle
+                targetBx.classList.add("danger")
                 targetMe.innerHTML = errors[field][0]
             }
             else{
-                targetBx.style.border = outFocusStyle
+                targetBx.classList.remove("danger")
+                targetBx.classList.add("blur")
                 targetMe.innerHTML = ""
             }
         }
     }
 
     return (
-        <form className="form-bx" onSubmit={handleSubmit}>
+        <form className="form-bx" style={{maxWidth:w}} onSubmit={handleSubmit}>
             {childrenWithProps}
         </form>
     )
@@ -161,20 +153,24 @@ function Input({
     }
 
     const handleFocus = ()=>{
-        if(outlineRef.current.style.border===dangerStyle){
-            outlineRef.current.style.boxShadow=dangerShadow
+        console.log()
+        if(outlineRef.current.classList[1] === "blur"){
+            outlineRef.current.classList.remove("blur")
+            outlineRef.current.classList.add("focus")
         }
         else{
-            outlineRef.current.style.border=focusStyle
-            outlineRef.current.style.boxShadow = focusShadow
+            outlineRef.current.classList.add("focus-danger")
         }
     }
 
     const handleBlur = ()=>{
-        if(outlineRef.current.style.border!==dangerStyle){
-            outlineRef.current.style.border=outFocusStyle
+        if(outlineRef.current.classList[1] === "focus") {
+            outlineRef.current.classList.remove("focus")
+            outlineRef.current.classList.add("blur")
         }
-        outlineRef.current.style.boxShadow = 'none'
+        else {
+            outlineRef.current.classList.remove("focus-danger")
+        }
     }
 
     //run valiation whenever value has changed
@@ -203,7 +199,7 @@ function Input({
     }, [name, setData, setErrors, inputRef.current.value, validation])
 
     return (
-        <div id={`${name}-bx`} ref={outlineRef} className="input-group">
+        <div id={`${name}-bx`} ref={outlineRef} className="input-group blur">
             {prefix && <span className="prefix"> {prefix} </span>}
             <input 
                 ref={inputRef} 
@@ -221,7 +217,7 @@ function Input({
     )     
 }
 
-function Submit({children}) {
+function Submit({value}) {
 
     const ClearAnimation = () => {
         const inputFields = document.querySelectorAll(".input-group.shake-animation")
@@ -231,7 +227,7 @@ function Submit({children}) {
         )
     }
 
-    return <input onClick={ClearAnimation} className="submit-btn" type='submit' value={children}/>
+    return <input onClick={ClearAnimation} className="submit-btn" type='submit' value={value}/>
 }
 
 function CheckBox({name, label, setData, defaultCheck}) {
@@ -252,6 +248,13 @@ function CheckBox({name, label, setData, defaultCheck}) {
         }
     }, [name, setData, defaultCheck])
 
+    const handleClick = () => {
+        inputRef.current.checked = !inputRef.current.checked
+        setData(data=>{return {
+            ...data, [name]:inputRef.current.checked
+        }})
+    }
+
     const handleChange = e => {
         setData(data=>{return {
             ...data, [name]:e.target.checked
@@ -266,7 +269,7 @@ function CheckBox({name, label, setData, defaultCheck}) {
                 type='checkbox' 
                 onChange={handleChange}
             />
-            <label>{label}</label>
+            <label className="btn" onClick={handleClick}>{label}</label>
         </div>
     )
     

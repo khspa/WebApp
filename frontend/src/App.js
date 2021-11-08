@@ -1,4 +1,5 @@
-import FrontPage from "./pages/FrontPage";
+import FrontPage from "./pages/FrontPage"
+
 
 function App() {
   return (

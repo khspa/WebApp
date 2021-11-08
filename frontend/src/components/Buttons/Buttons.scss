@@ -1,0 +1,38 @@
+@import "variables.scss";
+
+.locale {
+  font-size: 1.8rem;
+  color: grey;
+}
+
+.header-icon {
+  @include flex-center(row);
+  position: relative;
+  height: fit-content;
+  width: fit-content;
+  margin: 10px 15px;
+}
+
+.btns-group {
+  height: fit-content;
+  width: 100%;
+  margin: 10px;
+  padding: 0px 10px;
+  display: flex;
+
+  .cir-btn {
+    display: block;
+    border-radius: 50%;
+    font-size: 3rem;
+    height: 60px;
+    width: 60px;
+    background-color: rgb(233, 232, 232);
+    box-shadow: 5px 5px 15px 3px grey;
+    @include flex-center(column);
+  }
+}
+
+.row {
+  flex-direction: row;
+  justify-content: space-between;
+}
