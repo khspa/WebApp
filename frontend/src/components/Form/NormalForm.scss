@@ -21,6 +21,7 @@ $contentStyles: space-between, space-around, center, flex-start, flex-end;
 }
 
 .form-bx {
+  margin-top: 40px;
   height: fit-content;
   width: 100%;
   display: flex;
@@ -114,8 +115,7 @@ $contentStyles: space-between, space-around, center, flex-start, flex-end;
 }
 
 .check-bx {
-  display: flex;
-  align-items: center;
+  @include flex-center(row);
   margin: $itemMargin;
 
   input {
@@ -125,6 +125,7 @@ $contentStyles: space-between, space-around, center, flex-start, flex-end;
   }
 
   label {
+    height: 100%;
     font-size: 1rem;
   }
 }

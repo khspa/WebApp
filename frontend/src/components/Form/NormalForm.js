@@ -99,7 +99,7 @@ function NormalForm( {children, w} ) {
     }
 
     return (
-        <form className="form-bx" style={{maxWidth:w}} onSubmit={handleSubmit}>
+        <form className="form-bx" style={{maxWidth:w}} onSubmit={handleSubmit} noValidate>
             {childrenWithProps}
         </form>
     )
@@ -248,13 +248,6 @@ function CheckBox({name, label, setData, defaultCheck}) {
         }
     }, [name, setData, defaultCheck])
 
-    const handleClick = () => {
-        inputRef.current.checked = !inputRef.current.checked
-        setData(data=>{return {
-            ...data, [name]:inputRef.current.checked
-        }})
-    }
-
     const handleChange = e => {
         setData(data=>{return {
             ...data, [name]:e.target.checked
@@ -269,7 +262,7 @@ function CheckBox({name, label, setData, defaultCheck}) {
                 type='checkbox' 
                 onChange={handleChange}
             />
-            <label className="btn" onClick={handleClick}>{label}</label>
+            <label>{label}</label>
         </div>
     )
     
