@@ -124,6 +124,13 @@ function FrontPage() {
                                 defaultCheck={false}
                             />
                             <Modal
+                                button={{
+                                    closeMessage: "Agree",
+                                    middleWare: ()=>{
+                                        const checkbox = document.getElementById("agreement-check-bx")
+                                        !checkbox.checked && checkbox.click()
+                                    }
+                                }}
                                 messages={
                                     <>
                                         <h1>Terms And Conditions</h1>

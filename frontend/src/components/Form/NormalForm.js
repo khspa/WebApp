@@ -78,7 +78,9 @@ function NormalForm( {children, w} ) {
 
     const handleSubmit = e=>{
         e.preventDefault()
+
         console.log(data)
+        
         for(const field in errors) {
 
             const targetBx = document.getElementById(`${field}-bx`)
@@ -96,6 +98,7 @@ function NormalForm( {children, w} ) {
                 targetMe.innerHTML = ""
             }
         }
+
     }
 
     return (
@@ -230,10 +233,11 @@ function Submit({value}) {
     return <input onClick={ClearAnimation} className="submit-btn" type='submit' value={value}/>
 }
 
-function CheckBox({name, label, setData, defaultCheck}) {
+function CheckBox({name, label, setData, defaultCheck, required}) {
 
     const inputRef = useRef("")
 
+    //initialize
     useEffect(() => {
         if(defaultCheck){
             setData(data=>{return {
@@ -248,6 +252,7 @@ function CheckBox({name, label, setData, defaultCheck}) {
         }
     }, [name, setData, defaultCheck])
 
+    //handle user manual check
     const handleChange = e => {
         setData(data=>{return {
             ...data, [name]:e.target.checked
@@ -257,6 +262,7 @@ function CheckBox({name, label, setData, defaultCheck}) {
     return (
         <div className="check-bx">
             <input 
+                id={`${name}-check-bx`}
                 ref={inputRef} 
                 name={name} 
                 type='checkbox' 

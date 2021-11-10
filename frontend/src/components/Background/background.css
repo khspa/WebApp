@@ -9,8 +9,8 @@
   }
   .box div{
     position:absolute;
-    width:6vw;
-    height:6vw;
+    width:5vw;
+    height:5vw;
     background: transparent;
     border:6px solid rgba(141, 147, 219, 0.8);
   }

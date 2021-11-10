@@ -9,10 +9,19 @@ export function ButtonsGroup({w, children, row}) {
     )
 }
 
-export function CircleButton( {icon, size, bgColor} ) {
+export function CircleButton( {icon, size, bgColor, onClick} ) {
     return (
-        <div className="cir-btn btn" style={{height:size, width:size, backgroundColor:bgColor}}>
+        <div className="cir-btn btn" style={{height:size, width:size, backgroundColor:bgColor}} onClick={onClick}>
             {icon}
+        </div>
+    )
+}
+
+export function RecButton( {icon, size, bgColor, children, onClick} ) {
+    return (
+        <div className="rec-btn btn" style={{height:size, width:size, backgroundColor:bgColor}} onClick={onClick}>
+            {icon}
+            {children}
         </div>
     )
 }

@@ -15,10 +15,11 @@
 
 .btns-group {
   height: fit-content;
-  width: 100%;
+  width: 90%;
   margin: 10px;
   padding: 0px 10px;
   display: flex;
+  justify-content: center;
 
   .cir-btn {
     display: block;
@@ -30,6 +31,19 @@
     box-shadow: 5px 5px 15px 3px grey;
     @include flex-center(column);
   }
+
+  .rec-btn {
+    margin: 20px;
+    display: block;
+    border-radius: 12px;
+    background-color: $primaryColor;
+    padding: 10px;
+    color: white;
+    width: 100px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.3rem;
+  }
 }
 
 .row {
@@ -37,9 +51,20 @@
   justify-content: space-between;
 }
 
+.column {
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .modal-container {
   z-index: 2;
+
+  #modal-btn {
+    color: grey;
+    font-size: 1.1rem;
+  }
 }
+
 
 .modal {
   position: fixed;
@@ -52,10 +77,10 @@
 
   .modal-content {
     background-color: #f4f4f4;
-    margin: 3% auto;
+    margin: 5% auto;
     padding: 20px;
     width: 500px;
-    height: 800px;
+    height: 80vh;
     box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2), 0 7px 20px 0 rgba(0,0,0,0.17);
     overflow-y: scroll;
 
@@ -95,6 +120,7 @@
 @media screen and (max-width: 700px) {
   .modal {
     .modal-content {
+      margin: 14% auto;
       width: 90%;
       height: 80%;
     }
