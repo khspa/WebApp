@@ -11,6 +11,25 @@ $primaryColor: rgb(57, 140, 218);
   flex-direction: $direction;
 }
 
+.pop {
+  animation: pop-up 4s ease-in-out;
+}
+
+@keyframes pop-up {
+  0% {
+    transform: translateY(-300%);
+  }
+  10% {
+    transform: translateY(-50%);
+  }
+  90% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(-300%);
+  }
+}
+
 @keyframes shake {
   0% {
     transform: translate(0);
@@ -40,5 +59,6 @@ $primaryColor: rgb(57, 140, 218);
     opacity: 0.8;
   }
 }
+
 
 $color: rgb(89, 175, 255);

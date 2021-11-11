@@ -25,7 +25,7 @@ function FrontPage() {
             <BasicLayout.Header prefix={<Locale/>}/>
             <Transitor show={active}>
                 <BasicLayout.Body centerItems>
-                    <NormalForm w="320px" h="fit-content">
+                    <NormalForm formName="signin" w="340px" h="fit-content">
                         <NormalForm.Title 
                             logo={<img alt="logo" src={process.env.PUBLIC_URL + 'logo.svg'} />} 
                             title="online loan platform"
@@ -59,7 +59,7 @@ function FrontPage() {
                         </NormalForm.Item>
                     </NormalForm>
                     <Divider>Or sign in with</Divider>
-                    <ButtonsGroup w="320px" h="80px" row>
+                    <ButtonsGroup w="340px" h="80px" row>
                         <CircleButton icon={<FcGoogle/>}/>
                         <CircleButton icon={<BsFacebook style={{color:"#3b5998"}}/>}/>
                         <CircleButton icon={<BsApple style={{color:"#A2AAAD"}}/>}/>
@@ -67,7 +67,7 @@ function FrontPage() {
                     </ButtonsGroup>
                 </BasicLayout.Body>
                 <BasicLayout.Body centerItems>
-                    <NormalForm w="320px" h="fit-content">
+                    <NormalForm formName="signup" w="340px" h="fit-content">
                         <NormalForm.Title 
                             logo={<img alt="logo" src={process.env.PUBLIC_URL + 'reg.svg'} />} 
                             title="Sign Up Today"
@@ -122,6 +122,7 @@ function FrontPage() {
                             <NormalForm.CheckBox 
                                 name="agreement" 
                                 defaultCheck={false}
+                                mustCheck
                             />
                             <Modal
                                 button={{
@@ -141,14 +142,14 @@ function FrontPage() {
                                 }
                             >
                                 I acknowledge the  terms and conditions
-                            </Modal> 
+                            </Modal>
                         </NormalForm.Item>
                         <NormalForm.Item>
                             <NormalForm.Submit value="Sign Up"/>
                         </NormalForm.Item>
                     </NormalForm>
                     <Divider>Or sign up with</Divider>
-                    <ButtonsGroup w="320px" h="80px" row>
+                    <ButtonsGroup w="340px" h="80px" row>
                         <CircleButton icon={<FcGoogle/>}/>
                         <CircleButton icon={<BsFacebook style={{color:"#3b5998"}}/>}/>
                         <CircleButton icon={<BsApple style={{color:"#A2AAAD"}}/>}/>

@@ -23,7 +23,6 @@ function Modal({children, messages, button}) {
     }
 
     const handleMouseOut = () => {
-        console.log("i am working")
         document.addEventListener('click', closeModal)
     }
 

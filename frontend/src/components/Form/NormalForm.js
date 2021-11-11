@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { BsFillEyeSlashFill, BsFillEyeFill } from 'react-icons/bs'
+import ReactDOM from 'react-dom';
+import Messages from 'components/Others/Messages';
 import './NormalForm.scss'
 
 /* -------------------------------------------------------------------------- */
@@ -64,45 +66,78 @@ function validate(value, validation) {
 /*                               Form Component                               */
 /* -------------------------------------------------------------------------- */
 
-function NormalForm( {children, w} ) {
+function NormalForm( {formName, children, w} ) {
 
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
     const childrenWithProps = React.Children.map(children, child=>{
         if(React.isValidElement(child)){
-            return React.cloneElement(child, {...child.props, setData, setErrors}) 
+            return React.cloneElement(child, {...child.props, formName, setData, setErrors}) 
         } else {
             return child
         }
     })
 
     const handleSubmit = e=>{
-        e.preventDefault()
 
-        console.log(data)
-        
+        e.preventDefault()
+        let errorFlag = false
+
         for(const field in errors) {
 
-            const targetBx = document.getElementById(`${field}-bx`)
-            const targetMe = document.getElementById(`${field}-me`)
+            try{
+                const targetBx = document.getElementById(`${field}-bx`)
+                const targetMe = document.getElementById(`${field}-me`)
 
-            if(errors[field][0]){
-                targetBx.classList.remove("blur")
-                targetBx.classList.add("shake-animation")
-                targetBx.classList.add("danger")
-                targetMe.innerHTML = errors[field][0]
-            }
-            else{
-                targetBx.classList.remove("danger")
-                targetBx.classList.add("blur")
-                targetMe.innerHTML = ""
-            }
+                if(errors[field][0]){
+                    targetBx.classList.remove("blur")
+                    targetBx.classList.add("shake-animation")
+                    targetBx.classList.add("danger")
+                    targetMe.innerHTML = errors[field][0]
+                    errorFlag = true
+                }
+                else{
+                    targetBx.classList.remove("danger")
+                    targetBx.classList.add("blur")
+                    targetMe.innerHTML = ""
+                }
+            } catch {}
         }
+
+        if(errors.mustCheck) {
+            let message = errors.mustCheck
+            const target =  document.getElementById(`pop-up-message-${formName}`)
+            ReactDOM.render(<Messages status="warning">{message}</Messages>, target)
+            errorFlag = true
+        } 
+
+        if(data.ConfirmPassword && (data.ConfirmPassword !== data.registerPassword)){
+
+            const targetBx1 = document.getElementById("ConfirmPassword-bx")
+            const targetMe1 = document.getElementById(`ConfirmPassword-me`)
+
+            targetBx1.classList.remove("blur")
+            targetBx1.classList.add("shake-animation")
+            targetBx1.classList.add("danger")
+            targetMe1.innerHTML = "Password does not match"
+
+            const targetBx2 = document.getElementById("registerPassword-bx")
+            const targetMe2 = document.getElementById(`registerPassword-me`)
+
+            targetBx2.classList.remove("blur")
+            targetBx2.classList.add("shake-animation")
+            targetBx2.classList.add("danger")
+            targetMe2.innerHTML = "Password does not match"
+            errorFlag = true
+        }
+
+        console.log(errorFlag)        
 
     }
 
     return (
         <form className="form-bx" style={{maxWidth:w}} onSubmit={handleSubmit} noValidate>
+            <div id={`pop-up-message-${formName}`}></div>
             {childrenWithProps}
         </form>
     )
@@ -220,7 +255,7 @@ function Input({
     )     
 }
 
-function Submit({value}) {
+function Submit({value, formName}) {
 
     const ClearAnimation = () => {
         const inputFields = document.querySelectorAll(".input-group.shake-animation")
@@ -228,17 +263,41 @@ function Submit({value}) {
         .forEach(element=>
             element && element.classList.remove('shake-animation')
         )
+
+        try{
+            const target =  document.getElementById(`pop-up-message-${formName}`)
+            ReactDOM.render(<></>, target)
+        } catch{}
+    
     }
 
     return <input onClick={ClearAnimation} className="submit-btn" type='submit' value={value}/>
 }
 
-function CheckBox({name, label, setData, defaultCheck, required}) {
+function CheckBox({name, label, setData, setErrors, defaultCheck, mustCheck}) {
 
     const inputRef = useRef("")
 
+    const validateCheck = useCallback(() => {
+        if(mustCheck) {
+            if(!inputRef.current.checked) {
+                setErrors(data=>{return {
+                    ...data, mustCheck: `You must check ${name} to continue!`
+                }})
+            } else {
+                setErrors(data=>{
+                    let temp = data
+                    if(temp.mustCheck){delete temp.mustCheck}
+                    return temp
+                })
+            }
+
+        }
+    },[name, mustCheck, setErrors])
+
     //initialize
     useEffect(() => {
+        validateCheck()
         if(defaultCheck){
             setData(data=>{return {
                 ...data, [name]:defaultCheck
@@ -250,10 +309,11 @@ function CheckBox({name, label, setData, defaultCheck, required}) {
             }})
             inputRef.current.checked = false
         }
-    }, [name, setData, defaultCheck])
+    }, [name, setData, defaultCheck, validateCheck])
 
     //handle user manual check
     const handleChange = e => {
+        validateCheck()
         setData(data=>{return {
             ...data, [name]:e.target.checked
         }})
@@ -278,13 +338,16 @@ function CheckBox({name, label, setData, defaultCheck, required}) {
 /*                                   Divider                                  */
 /* -------------------------------------------------------------------------- */
 
-function Item({children, layout, setData, setErrors, style}) {
+function Item({children, layout, setData, setErrors, formName, style}) {
 
     const childrenWithProps = React.Children.map(children, child=>{
         if(React.isValidElement(child)){
             //pass setData and setErrors props to children if they have name
             if(child.props.name){
-                return React.cloneElement(child, {...child.props, setData, setErrors})
+                return React.cloneElement(child, {...child.props, formName, setData, setErrors})
+            }
+            else if (child.props.value){
+                return React.cloneElement(child, {...child.props, formName})
             }
             //return if child does not have name
             else{

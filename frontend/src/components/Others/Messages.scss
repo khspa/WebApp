@@ -1,0 +1,60 @@
+@import 'variables.scss';
+
+.alert-box {
+    width: 100%;
+    z-index: 99;
+    transform: translateY(-300%);
+    left: 0;
+    position: fixed;
+    @include flex-center(row);
+}
+
+.warning {
+
+    .alert {
+        background: #f5d7d7;
+        border: 1px ridge rgb(241, 222, 222);
+
+        .sign {
+            color: rgb(250, 83, 83);
+        }
+    }
+    
+}
+
+.ok {
+    .alert {
+        background: rgb(212, 240, 212);
+        border: 1px ridge rgb(222, 241, 223);
+
+        .sign {
+            color: rgb(53, 172, 53);
+        }
+    }
+}
+
+.alert {
+    width: 300px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    box-shadow: 3px 3px 10px 2px rgb(209, 201, 201);
+
+    .sign {
+        font-size: 1.2rem;
+        flex: 1;
+    }
+
+    .msg {
+        font-size: 1rem;
+        color: #333;
+        flex: 8;
+        white-space: nowrap;
+    }
+
+
+    svg {
+        @include flex-center(column);
+    }
+}
+
