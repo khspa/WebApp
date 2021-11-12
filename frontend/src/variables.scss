@@ -2,7 +2,7 @@ $itemMargin: 0px 10px;
 $borderRadius: 10px;
 $Bxheight: 40px;
 
-$primaryColor: rgb(57, 140, 218);
+$primaryColor: rgb(27, 127, 221);
 
 @mixin flex-center($direction) {
   display: flex;
@@ -59,6 +59,3 @@ $primaryColor: rgb(57, 140, 218);
     opacity: 0.8;
   }
 }
-
-
-$color: rgb(89, 175, 255);

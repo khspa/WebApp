@@ -1,9 +1,32 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { BsFillEyeSlashFill, BsFillEyeFill } from 'react-icons/bs'
-import ReactDOM from 'react-dom';
-import Messages from 'components/Others/Messages';
+import axios from 'axios'
+import ReactDOM from 'react-dom'
+import Messages from 'components/Others/Messages'
 import './NormalForm.scss'
+
+/* -------------------------------------------------------------------------- */
+/*                                   helper                                   */
+/* -------------------------------------------------------------------------- */
+
+const showError = (target, message) => {
+    const targetBx = document.getElementById(`${target}-bx`)
+    const targetMe = document.getElementById(`${target}-me`)
+
+    if(message){
+        targetBx.classList.remove("blur")
+        targetBx.classList.add("shake-animation")
+        targetBx.classList.add("danger")
+        targetMe.innerHTML = message
+        return true
+    } else {
+        targetBx.classList.remove("danger")
+        targetBx.classList.add("blur")
+        targetMe.innerHTML = ""
+        return false
+    }
+}
 
 /* -------------------------------------------------------------------------- */
 /*                                 Validations                                */
@@ -66,7 +89,7 @@ function validate(value, validation) {
 /*                               Form Component                               */
 /* -------------------------------------------------------------------------- */
 
-function NormalForm( {formName, children, w} ) {
+function NormalForm( {formName, children, w, request} ) {
 
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
@@ -83,24 +106,10 @@ function NormalForm( {formName, children, w} ) {
         e.preventDefault()
         let errorFlag = false
 
+        /* --------------------------- frontend validation -------------------------- */
         for(const field in errors) {
-
             try{
-                const targetBx = document.getElementById(`${field}-bx`)
-                const targetMe = document.getElementById(`${field}-me`)
-
-                if(errors[field][0]){
-                    targetBx.classList.remove("blur")
-                    targetBx.classList.add("shake-animation")
-                    targetBx.classList.add("danger")
-                    targetMe.innerHTML = errors[field][0]
-                    errorFlag = true
-                }
-                else{
-                    targetBx.classList.remove("danger")
-                    targetBx.classList.add("blur")
-                    targetMe.innerHTML = ""
-                }
+                errorFlag = showError(field, errors[field][0])
             } catch {}
         }
 
@@ -112,26 +121,52 @@ function NormalForm( {formName, children, w} ) {
         } 
 
         if(data.ConfirmPassword && (data.ConfirmPassword !== data.registerPassword)){
-
-            const targetBx1 = document.getElementById("ConfirmPassword-bx")
-            const targetMe1 = document.getElementById(`ConfirmPassword-me`)
-
-            targetBx1.classList.remove("blur")
-            targetBx1.classList.add("shake-animation")
-            targetBx1.classList.add("danger")
-            targetMe1.innerHTML = "Password does not match"
-
-            const targetBx2 = document.getElementById("registerPassword-bx")
-            const targetMe2 = document.getElementById(`registerPassword-me`)
-
-            targetBx2.classList.remove("blur")
-            targetBx2.classList.add("shake-animation")
-            targetBx2.classList.add("danger")
-            targetMe2.innerHTML = "Password does not match"
-            errorFlag = true
+            errorFlag = showError("ConfirmPassword", "Password does not match")
+            errorFlag = showError("registerPassword", "Password does not match")
         }
 
-        console.log(errorFlag)        
+        /* ------------------------ if everything goes right ------------------------ */
+        if(!errorFlag) {
+            axios.post(request.host, data)
+            .then(response => {
+                const target =  document.getElementById(`pop-up-message-${formName}`)
+                ReactDOM.render(request.success, target)
+
+                window.localStorage.setItem("access", response.data.access)
+                window.localStorage.setItem("refresh", response.data.refresh)
+                        
+                if(data.remember) {
+                    window.localStorage.setItem("username", data.username)
+                    window.localStorage.setItem("password", data.password)
+                } else {
+                    window.localStorage.removeItem("username", data.username)
+                    window.localStorage.removeItem("password", data.password)
+                }
+  
+            })
+            .catch(error => {
+                /* ------------------------ 401 authentication error ------------------------ */
+                if(error.response.status === 401){
+
+                    const target =  document.getElementById(`pop-up-message-${formName}`)
+                    ReactDOM.render(request.fail, target)
+
+                    showError('username', "Wrong Username/Password")
+                    showError('password', "Wrong Username/Password")
+                /* ----------------------------- 400 bad request ---------------------------- */
+                } else if (error.response.status === 400){
+
+                    const errors = error.response.data
+                    for (const key in errors) {showError(key, errors[key])}
+                    
+                }
+                /* ------------------------------ other errors ------------------------------ */
+                else {  
+                    const target =  document.getElementById(`pop-up-message-${formName}`)
+                    ReactDOM.render(<Messages status="warning">{request.fail}: target server not responding</Messages>, target)
+                }
+            })
+        }    
 
     }
 
@@ -155,6 +190,7 @@ function Title( {logo, title} ) {
 function Input({
     name,
     type,
+    defaultValue,
     placeholder,
     validation,
     setData,
@@ -191,7 +227,6 @@ function Input({
     }
 
     const handleFocus = ()=>{
-        console.log()
         if(outlineRef.current.classList[1] === "blur"){
             outlineRef.current.classList.remove("blur")
             outlineRef.current.classList.add("focus")
@@ -213,17 +248,6 @@ function Input({
 
     //run valiation whenever value has changed
     useEffect(() => {
-        
-        //initialize fields
-        if(!inputRef.current.value){
-            setData(data=>{return {
-                ...data, [name]:""
-            }})
-            setErrors(data=>{return {
-                ...data, [name]:[]
-            }})
-        }
-
         //valiation
         if(validation){
             const errorMessages = validate(inputRef.current.value, validation)
@@ -233,8 +257,27 @@ function Input({
                 }})
             }
         }
-
     }, [name, setData, setErrors, inputRef.current.value, validation])
+
+    //initialize value
+    useEffect(() => {
+        if(defaultValue) {
+            inputRef.current.value = defaultValue
+            setData(data=>{return {
+                ...data, [name]:defaultValue
+            }})
+            setErrors(data=>{return {
+                ...data, [name]:[]
+            }})
+        } else {
+            setData(data=>{return {
+                ...data, [name]:""
+            }})
+            setErrors(data=>{return {
+                ...data, [name]:[]
+            }})
+        }
+    }, [defaultValue, setData, setErrors, name])
 
     return (
         <div id={`${name}-bx`} ref={outlineRef} className="input-group blur">
@@ -243,7 +286,7 @@ function Input({
                 ref={inputRef} 
                 name={name} 
                 type={type} 
-                placeholder={placeholder} 
+                placeholder={placeholder}
                 onChange={handleChange}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
@@ -282,7 +325,7 @@ function CheckBox({name, label, setData, setErrors, defaultCheck, mustCheck}) {
         if(mustCheck) {
             if(!inputRef.current.checked) {
                 setErrors(data=>{return {
-                    ...data, mustCheck: `You must check ${name} to continue!`
+                    ...data, mustCheck: `You must agree to the terms and conditions!`
                 }})
             } else {
                 setErrors(data=>{
@@ -293,7 +336,7 @@ function CheckBox({name, label, setData, setErrors, defaultCheck, mustCheck}) {
             }
 
         }
-    },[name, mustCheck, setErrors])
+    },[mustCheck, setErrors])
 
     //initialize
     useEffect(() => {

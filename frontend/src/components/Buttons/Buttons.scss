@@ -68,19 +68,28 @@
 
 .modal {
   position: fixed;
-  z-index: 100;
+  z-index: 5;
   left: 0; top: 0;
   height: 100%;
   width: 100%;
   overflow: auto;
   background-color: rgba(0,0,0,0.5);
+  overflow-y: hidden;
+
+  .normal {
+    height: 80vh;
+    margin: 5% auto;
+  }
+
+  .popup {
+    height:fit-content;
+    margin: 15% auto;
+  }
 
   .modal-content {
     background-color: #f4f4f4;
-    margin: 5% auto;
     padding: 20px;
     width: 500px;
-    height: 80vh;
     box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2), 0 7px 20px 0 rgba(0,0,0,0.17);
     overflow-y: scroll;
 
@@ -119,10 +128,15 @@
 
 @media screen and (max-width: 700px) {
   .modal {
-    .modal-content {
-      margin: 14% auto;
+    .normal {
+      margin: 15% auto;
       width: 90%;
-      height: 80%;
+      height: 85%;
+    }
+
+    .popup {
+      margin: 70% auto;
+      width: 90%;
     }
   }
 }

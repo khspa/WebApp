@@ -34,7 +34,7 @@
 }
 
 .alert {
-    width: 300px;
+    width: fit-content;
     display: flex;
     align-items: center;
     padding: 10px;
@@ -42,13 +42,12 @@
 
     .sign {
         font-size: 1.2rem;
-        flex: 1;
+        margin-right: 10px;
     }
 
     .msg {
         font-size: 1rem;
         color: #333;
-        flex: 8;
         white-space: nowrap;
     }
 

@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import './Buttons.scss'
 import { ButtonsGroup, RecButton } from 'components/Buttons/Buttons'
  
-function Modal({children, messages, button}) {
-
+export function Modal({children, messages, button}) {
 
     const [on, setOn] = useState(false)
 
@@ -37,7 +36,7 @@ function Modal({children, messages, button}) {
             </span>
 
             <div id="simple-modal" className={`modal ${on?"active":"inactive"}`}>
-                <div className="modal-content" onMouseEnter={handleMouseIn} onMouseLeave={handleMouseOut}>
+                <div className="modal-content normal" onMouseEnter={handleMouseIn} onMouseLeave={handleMouseOut}>
                     <span className="closeBtn btn" onClick={()=>setOn(false)}>
                         &times;
                     </span>
@@ -60,4 +59,44 @@ function Modal({children, messages, button}) {
     )
 }
 
-export default Modal
+export function ModalPopUp({children, button, fontsize}) {
+
+    const [on, setOn] = useState(true)
+
+    const handleClose = () => {
+        setOn(false)
+        button.middleWare && button.middleWare()
+    }
+
+    const closeModal = () => {
+        setOn(false)
+        document.removeEventListener('click', closeModal)
+    }
+
+    const handleMouseOut = () => {
+        document.addEventListener('click', closeModal)
+    }
+
+    const handleMouseIn = () => {
+        document.removeEventListener('click', closeModal)
+    }
+
+    return (
+        <div id="simple-modal" className={`modal ${on?"active":"inactive"}`}>
+            <div className="modal-content popup" onMouseEnter={handleMouseIn} onMouseLeave={handleMouseOut} style={{fontSize:fontsize}} >
+                <span className="closeBtn btn" onClick={()=>setOn(false)}> &times; </span>
+                <div className="modal-text">
+                    {children}
+                    {
+                        button && 
+                        <ButtonsGroup w="100%">
+                            <RecButton onClick={handleClose}>
+                                {button.closeMessage}
+                            </RecButton>
+                        </ButtonsGroup>
+                    }
+                </div>
+            </div>
+        </div>
+    )
+}

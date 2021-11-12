@@ -1,3 +1,5 @@
+@import "variables.scss";
+
 * {
   margin: 0;
   padding: 0;
@@ -16,7 +18,7 @@ html {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 3px;
+  width:  3px;
 }
 
 /* Track */
@@ -32,4 +34,12 @@ html {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.align-center {
+  @include flex-center(row)
 }
