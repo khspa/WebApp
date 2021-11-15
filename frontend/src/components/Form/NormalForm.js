@@ -5,6 +5,7 @@ import axios from 'axios'
 import ReactDOM from 'react-dom'
 import Messages from 'components/Others/Messages'
 import './NormalForm.scss'
+import { useHistory } from 'react-router'
 
 /* -------------------------------------------------------------------------- */
 /*                                   helper                                   */
@@ -91,6 +92,7 @@ function validate(value, validation) {
 
 function NormalForm( {formName, children, w, request} ) {
 
+    const history = useHistory()
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
     const childrenWithProps = React.Children.map(children, child=>{
@@ -115,7 +117,7 @@ function NormalForm( {formName, children, w, request} ) {
 
         if(errors.mustCheck) {
             let message = errors.mustCheck
-            const target =  document.getElementById(`pop-up-message-${formName}`)
+            const target =  document.getElementById("pop-up-message")
             ReactDOM.render(<Messages status="warning">{message}</Messages>, target)
             errorFlag = true
         } 
@@ -129,7 +131,7 @@ function NormalForm( {formName, children, w, request} ) {
         if(!errorFlag) {
             axios.post(request.host, data)
             .then(response => {
-                const target =  document.getElementById(`pop-up-message-${formName}`)
+                const target =  document.getElementById("pop-up-message")
                 ReactDOM.render(request.success, target)
 
                 window.localStorage.setItem("access", response.data.access)
@@ -142,13 +144,13 @@ function NormalForm( {formName, children, w, request} ) {
                     window.localStorage.removeItem("username", data.username)
                     window.localStorage.removeItem("password", data.password)
                 }
-  
+                history.push(request.sredirect)
             })
             .catch(error => {
                 /* ------------------------ 401 authentication error ------------------------ */
                 if(error.response.status === 401){
 
-                    const target =  document.getElementById(`pop-up-message-${formName}`)
+                    const target =  document.getElementById("pop-up-message")
                     ReactDOM.render(request.fail, target)
 
                     showError('username', "Wrong Username/Password")
@@ -157,7 +159,7 @@ function NormalForm( {formName, children, w, request} ) {
                 } else if (error.response.status === 400){
 
                     const errors = error.response.data
-                    for (const key in errors) {showError(key, errors[key])}
+                    for (const key in errors) {showError(key, errors[key][0])}
                     
                 }
                 /* ------------------------------ other errors ------------------------------ */
@@ -172,7 +174,6 @@ function NormalForm( {formName, children, w, request} ) {
 
     return (
         <form className="form-bx" style={{maxWidth:w}} onSubmit={handleSubmit} noValidate>
-            <div id={`pop-up-message-${formName}`}></div>
             {childrenWithProps}
         </form>
     )
@@ -308,7 +309,7 @@ function Submit({value, formName}) {
         )
 
         try{
-            const target =  document.getElementById(`pop-up-message-${formName}`)
+            const target =  document.getElementById("pop-up-message")
             ReactDOM.render(<></>, target)
         } catch{}
     

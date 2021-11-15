@@ -1,11 +1,20 @@
 import FrontPage from "./pages/FrontPage"
 import Main from "./pages/App"
-// import { Switch, BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 function App() {
   return (
     <div className="App">
-      <Main/>
+      <div id={`pop-up-message`}></div>
+      <Router>
+        <Route exact path="/">
+          <Main/>
+        </Route>
+        <Route path="/user">
+          <FrontPage/>
+        </Route>
+      </Router>
+
     </div>
   );
 }

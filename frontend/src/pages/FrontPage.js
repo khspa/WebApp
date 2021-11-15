@@ -23,188 +23,179 @@ function FrontPage() {
     const [active, setActive] = useState(true)
     const username = window.localStorage.getItem("username")
     const password = window.localStorage.getItem("password")
-    const access = window.localStorage.getItem("access")
-    const refresh = window.localStorage.getItem("refresh")
 
-    if(true){
-        return (
-            <BasicLayout background={<AnimatedBg/>}>
-                <BasicLayout.Header prefix={<Locale/>}/>
-                <Transitor show={active}>
-                    <BasicLayout.Body centerItems>
-                        <NormalForm 
-                            formName="signin" 
-                            w="340px" 
-                            h="fit-content" 
-                            url="/api/token/"
-                            request={{
-                                host:"/api/token/", 
-                                success:<Messages status="ok">Login successful</Messages>, 
-                                fail:<Messages status="warning">Authentication failed</Messages>,
-                                sredirect: "https://www.google.com.hk/",
-                                fredirect: "https://www.apple.com/hk/"
-                            }}
-                        >
-                            <NormalForm.Title 
-                                logo={<img alt="logo" src={process.env.PUBLIC_URL + 'logo.svg'} />} 
-                                title="online loan platform"
+    return (
+        <BasicLayout background={<AnimatedBg/>}>
+            <BasicLayout.Header prefix={<Locale/>}/>
+            <Transitor show={active}>
+                <BasicLayout.Body centerItems>
+                    <NormalForm 
+                        formName="signin" 
+                        w="340px" 
+                        h="fit-content" 
+                        request={{
+                            host:"/auth/token/", 
+                            success:<Messages status="ok">Login successful</Messages>, 
+                            fail:<Messages status="warning">Authentication failed</Messages>,
+                            sredirect: "/",
+                        }}
+                    >
+                        <NormalForm.Title 
+                            logo={<img alt="logo" src='/logo.svg' />} 
+                            title="online loan platform"
+                        />
+                        <NormalForm.Item>
+                            <NormalForm.Input 
+                                prefix={<FaUser/>}
+                                name="username" 
+                                type="text" 
+                                placeholder="Username"
+                                validation={{required:true}}
+                                defaultValue={username}
+                                clearData
                             />
-                            <NormalForm.Item>
-                                <NormalForm.Input 
-                                    prefix={<FaUser/>}
-                                    name="username" 
-                                    type="text" 
-                                    placeholder="Username"
-                                    validation={{required:true}}
-                                    defaultValue={username}
-                                    clearData
-                                />
-                            </NormalForm.Item>
-                            <NormalForm.Item>
-                                <NormalForm.Input 
-                                    prefix={<FaLock/>}
-                                    name="password" 
-                                    type="password" 
-                                    placeholder="Password"
-                                    validation={{required:true}}
-                                    defaultValue={password}
-                                    hideData
-                                />
-                            </NormalForm.Item>
-                            <NormalForm.Item layout="space-between">
-                                <NormalForm.CheckBox name="remember" label="Remember Me" defaultCheck={true}/>
-                                <HyperText href="/">forgot username/password?</HyperText>
-                            </NormalForm.Item>
-                            <NormalForm.Item>
-                                <NormalForm.Submit value="Sign In"/>
-                            </NormalForm.Item>
-                        </NormalForm>
-                        <Divider>Or sign in with</Divider>
-                        <ButtonsGroup w="340px" h="80px" row>
-                            <CircleButton icon={<FcGoogle/>}/>
-                            <CircleButton icon={<BsFacebook style={{color:"#3b5998"}}/>}/>
-                            <CircleButton icon={<BsApple style={{color:"#A2AAAD"}}/>}/>
-                            <CircleButton icon={<BsTwitter style={{color: "#1DA1F2"}}/>}/>
-                        </ButtonsGroup>
-                    </BasicLayout.Body>
-                    <BasicLayout.Body centerItems>
-                        <NormalForm 
-                            formName="signup"
-                            w="340px"
-                            h="fit-content"
-                            request={{
-                                host:"/api/register/", 
-                                success:
-                                    <ModalPopUp
+                        </NormalForm.Item>
+                        <NormalForm.Item>
+                            <NormalForm.Input 
+                                prefix={<FaLock/>}
+                                name="password" 
+                                type="password" 
+                                placeholder="Password"
+                                validation={{required:true}}
+                                defaultValue={password}
+                                hideData
+                            />
+                        </NormalForm.Item>
+                        <NormalForm.Item layout="space-between">
+                            <NormalForm.CheckBox name="remember" label="Remember Me" defaultCheck={true}/>
+                            <HyperText href="/">forgot username/password?</HyperText>
+                        </NormalForm.Item>
+                        <NormalForm.Item>
+                            <NormalForm.Submit value="Sign In"/>
+                        </NormalForm.Item>
+                    </NormalForm>
+                    <Divider>Or sign in with</Divider>
+                    <ButtonsGroup w="340px" h="80px" row>
+                        <CircleButton icon={<FcGoogle/>}/>
+                        <CircleButton icon={<BsFacebook style={{color:"#3b5998"}}/>}/>
+                        <CircleButton icon={<BsApple style={{color:"#A2AAAD"}}/>}/>
+                        <CircleButton icon={<BsTwitter style={{color: "#1DA1F2"}}/>}/>
+                    </ButtonsGroup>
+                </BasicLayout.Body>
+                <BasicLayout.Body centerItems>
+                    <NormalForm 
+                        formName="signup"
+                        w="340px"
+                        h="fit-content"
+                        request={{
+                            host:"/auth/register/", 
+                            success:
+                                <ModalPopUp
                                     button={{
                                         closeMessage: "Continue"
                                     }}
-                                    >
-                                        <div className="text-center align-center" style={{fontSize:"1.4rem"}}>
-                                            <MdOutlineGppGood style={{color:"green", fontSize:"3rem", marginRight:"5px"}}/>
-                                            An Email has been sent to you for verification
-                                        </div>
-                                    </ModalPopUp>
-                                    , 
-                                fail: <Messages status="warning">Register failed</Messages>, 
-                            }}
-                        >
-                            <NormalForm.Title 
-                                logo={<img alt="logo" src={process.env.PUBLIC_URL + 'reg.svg'} />} 
-                                title="Sign Up Today"
-                            />
-                            <NormalForm.Item>
-                                <NormalForm.Input
-                                    prefix={<FaUser/>}
-                                    name="registerName" 
-                                    type="text"
-                                    placeholder="Username"
-                                    clearData
-                                    validation={{
-                                        required: true,
-                                        include: "a-zA-Z0-9@!#"
-                                    }}
-                                />
-                            </NormalForm.Item>
-                            <NormalForm.Item>
-                                <NormalForm.Input
-                                    prefix={<HiMail/>}
-                                    name="email" 
-                                    type="email"
-                                    placeholder="Email"
-                                    clearData
-                                    validation={{
-                                        required:true,
-                                        email: true
-                                    }}
-                                />
-                            </NormalForm.Item>
-                            <NormalForm.Item>
-                                <NormalForm.Input
-                                    prefix={<FaLock/>}
-                                    name="registerPassword" 
-                                    type="password"
-                                    placeholder="Password"
-                                    hideData
-                                    validation={{required:true}}
-                                />
-                            </NormalForm.Item>
-                            <NormalForm.Item>
-                                <NormalForm.Input
-                                    prefix={<BsFillShieldLockFill/>}
-                                    name="ConfirmPassword" 
-                                    type="password"
-                                    placeholder="Confirm Password"
-                                    hideData
-                                    validation={{required:true}}
-                                />
-                            </NormalForm.Item>
-                            <NormalForm.Item layout="flex-start">
-                                <NormalForm.CheckBox 
-                                    name="agreement" 
-                                    defaultCheck={false}
-                                    mustCheck
-                                />
-                                <Modal
-                                    button={{
-                                        closeMessage: "Agree",
-                                        middleWare: ()=>{
-                                            const checkbox = document.getElementById("agreement-check-bx")
-                                            !checkbox.checked && checkbox.click()
-                                        }
-                                    }}
-                                    messages={
-                                        <>
-                                            <h1>Terms And Conditions</h1>
-                                            <p>{terms1}</p>
-                                            <p>{terms1}</p>
-                                            <p>{terms1}</p>
-                                        </>
-                                    }
                                 >
-                                    I acknowledge the  terms and conditions
-                                </Modal>
-                            </NormalForm.Item>
-                            <NormalForm.Item>
-                                <NormalForm.Submit value="Sign Up"/>
-                            </NormalForm.Item>
-                        </NormalForm>
-                        <Divider>Or sign up with</Divider>
-                        <ButtonsGroup w="340px" h="80px" row>
-                            <CircleButton icon={<FcGoogle/>}/>
-                            <CircleButton icon={<BsFacebook style={{color:"#3b5998"}}/>}/>
-                            <CircleButton icon={<BsApple style={{color:"#A2AAAD"}}/>}/>
-                            <CircleButton icon={<BsTwitter style={{color: "#1DA1F2"}}/>}/>
-                        </ButtonsGroup>
-                    </BasicLayout.Body>
-                </Transitor>
-                <Toggle icon={<FaHandPaper/>} active={active} setActive={setActive} on="Sign Up" off="Sign In"/>
-            </BasicLayout>
-        )
-    } else {
-        return <div>login success: {refresh}</div>
-    }
-
+                                    <div className="text-center align-center" style={{fontSize:"1.4rem"}}>
+                                        <MdOutlineGppGood style={{color:"green", fontSize:"3rem", marginRight:"5px"}}/>
+                                        An Email has been sent to you for verification
+                                    </div>
+                                </ModalPopUp>
+                                , 
+                            fail: <Messages status="warning">Register failed</Messages>, 
+                        }}
+                    >
+                        <NormalForm.Title 
+                            logo={<img alt="logo" src='/reg.svg' />} 
+                            title="Sign Up Today"
+                        />
+                        <NormalForm.Item>
+                            <NormalForm.Input
+                                prefix={<FaUser/>}
+                                name="registerName" 
+                                type="text"
+                                placeholder="Username"
+                                clearData
+                                validation={{
+                                    required: true,
+                                    include: "a-zA-Z0-9@!#"
+                                }}
+                            />
+                        </NormalForm.Item>
+                        <NormalForm.Item>
+                            <NormalForm.Input
+                                prefix={<HiMail/>}
+                                name="email" 
+                                type="email"
+                                placeholder="Email"
+                                clearData
+                                validation={{
+                                    required:true,
+                                    email: true
+                                }}
+                            />
+                        </NormalForm.Item>
+                        <NormalForm.Item>
+                            <NormalForm.Input
+                                prefix={<FaLock/>}
+                                name="registerPassword" 
+                                type="password"
+                                placeholder="Password"
+                                hideData
+                                validation={{required:true}}
+                            />
+                        </NormalForm.Item>
+                        <NormalForm.Item>
+                            <NormalForm.Input
+                                prefix={<BsFillShieldLockFill/>}
+                                name="ConfirmPassword" 
+                                type="password"
+                                placeholder="Confirm Password"
+                                hideData
+                                validation={{required:true}}
+                            />
+                        </NormalForm.Item>
+                        <NormalForm.Item layout="flex-start">
+                            <NormalForm.CheckBox 
+                                name="agreement" 
+                                defaultCheck={false}
+                                mustCheck
+                            />
+                            <Modal
+                                button={{
+                                    closeMessage: "Agree",
+                                    middleWare: ()=>{
+                                        const checkbox = document.getElementById("agreement-check-bx")
+                                        !checkbox.checked && checkbox.click()
+                                    }
+                                }}
+                                messages={
+                                    <>
+                                        <h1>Terms And Conditions</h1>
+                                        <p>{terms1}</p>
+                                        <p>{terms1}</p>
+                                        <p>{terms1}</p>
+                                    </>
+                                }
+                            >
+                                I acknowledge the  terms and conditions
+                            </Modal>
+                        </NormalForm.Item>
+                        <NormalForm.Item>
+                            <NormalForm.Submit value="Sign Up"/>
+                        </NormalForm.Item>
+                    </NormalForm>
+                    <Divider>Or sign up with</Divider>
+                    <ButtonsGroup w="340px" h="80px" row>
+                        <CircleButton icon={<FcGoogle/>}/>
+                        <CircleButton icon={<BsFacebook style={{color:"#3b5998"}}/>}/>
+                        <CircleButton icon={<BsApple style={{color:"#A2AAAD"}}/>}/>
+                        <CircleButton icon={<BsTwitter style={{color: "#1DA1F2"}}/>}/>
+                    </ButtonsGroup>
+                </BasicLayout.Body>
+            </Transitor>
+            <Toggle icon={<FaHandPaper/>} active={active} setActive={setActive} on="Sign Up" off="Sign In"/>
+        </BasicLayout>
+    )
 
 }
 
