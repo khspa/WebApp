@@ -18,7 +18,7 @@ function TopNavBar({title, logo, items}) {
             
             <ul className="nav-items">
                 {items.map(item => {
-                    return <li className="btn" key={item}>{item}</li>
+                    return <li className="topnav-item" key={item.props.name}> {item} </li>
                 })}
             </ul>
         </div>

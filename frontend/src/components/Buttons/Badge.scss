@@ -1,0 +1,122 @@
+@import "variables.scss";
+
+.badge {
+    margin: 0px 15px;
+    height: 100%;
+    width: 100%;
+    border-radius: 30%;
+    @include flex-center(column);
+
+    .num {
+        top: 3px;
+        left: 6px;
+        height: 20px;
+        width: 20px;
+        background-color: rgb(226, 17, 17);
+        border-radius: 50%;
+        position: absolute;
+        font-size: 1.1rem;
+        @include flex-center(column);
+        text-align: center;
+    }
+
+    
+    .inactive {
+        transform: translateY(-100%);
+    }
+
+    .active {
+        box-shadow: -5px 5px 10px 1px rgba(158, 157, 157, 0.8);
+        transform: translateY(0);
+    }
+
+    .drop-down {
+        position: fixed;
+        background-color: rgb(74, 125, 201);
+        width: fit-content;
+        right: 0px;
+        top: 55px;
+        transition: all 0.3s ease;
+        z-index: -1;
+
+        .d-item {
+            text-align: left !important;
+            background-color: rgb(236, 240, 247);
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 10px 15px;
+            transition: all 0.3s ease-in-out;
+            font-size: 1.15rem;   
+            color: black !important;
+
+            &:hover {
+                background-color:rgb(184, 204, 240);
+            }
+
+            .from {
+                height: 30px;
+                width: 30px;
+                background-color: white;
+                border-radius: 50%;
+                font-size: 1.5rem;
+                @include flex-center(column);
+                margin-right: 5px;
+            }
+
+            .message {
+                font-size: 1rem;
+                color: rgb(100, 97, 97);
+                margin-right: 0px;
+            }
+
+            .status {
+                position: relative;
+                right: -7px;
+                font-size: 1rem;
+                width: 50px;
+                padding: 3px 8px;
+                border-radius: 12px;
+                color: white;
+                @include flex-center(column);
+            }
+
+            .read {
+                background-color: rgb(22, 134, 22);
+            }
+
+            .unread {
+                background-color: rgb(214, 13, 13);
+            }
+
+            .date {
+                margin-left: 10px;
+                position: absolute;
+                color: rgb(150, 146, 146);
+                left: 40px;
+                font-size: 0.8rem;
+                bottom: 6px;
+            }
+
+        }
+    }
+
+    .icon {
+        background-color: rgb(233, 233, 243);
+        border-radius: 12px;
+        height: 40px;
+        width: 40px;
+        font-size: 2rem;
+        color: $secondaryColor;
+        transition: all 0.3s ease-in-out;
+        @include flex-center(column);
+    }
+
+    &:hover {
+        cursor: pointer;
+
+        .icon {
+            font-size: 2.5rem;
+        }
+    }
+}

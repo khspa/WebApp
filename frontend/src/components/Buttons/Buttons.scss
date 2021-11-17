@@ -70,9 +70,8 @@
   position: fixed;
   z-index: 5;
   left: 0; top: 0;
-  height: 100%;
+  height: 950px;
   width: 100%;
-  overflow: auto;
   background-color: rgba(0,0,0,0.5);
   overflow-y: hidden;
 
@@ -118,11 +117,7 @@
 
 }
 
-.active {
-  display: show;
-}
-
-.inactive {
+.hide {
   display: none;
 }
 
@@ -131,7 +126,7 @@
     .normal {
       margin: 15% auto;
       width: 90%;
-      height: 85%;
+      height: 70%;
     }
 
     .popup {

@@ -1,0 +1,67 @@
+@import 'variables.scss';
+
+.avatar {
+    @include flex-center(row);
+    height: 100%;
+
+    .icon {
+        margin: 0px 10px;
+        background-color: rgb(99, 100, 139);
+        height: 42px;
+        width: 42px;
+        @include flex-center(column);
+        border-radius: 50%;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            cursor: pointer;
+            background-color: rgb(87, 87, 126);
+        }
+    }
+
+    .no-icon {
+        font-size: 1.4rem;
+    }
+
+    
+    .inactive {
+        transform: translateY(-100%);
+    }
+
+    .active {
+        box-shadow: -5px 5px 10px 1px rgba(158, 157, 157, 0.8);
+        transform: translateY(0);
+    }
+
+    .drop-down {
+        position: fixed;
+        background-color: rgb(74, 125, 201);
+        width: 140px;
+        right: 0px;
+        z-index: -1;
+        top: 55px;
+        transition: all 0.3s ease;
+
+        .d-item {
+            text-align: left !important;
+            background-color: rgb(128, 149, 196);
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 10px 15px;
+            transition: all 0.3s ease-in-out;
+            font-size: 1.15rem;   
+
+            .i {
+                @include flex-center(column);
+                margin-right: 5px;
+            }
+
+            &:hover {
+                cursor: pointer;
+                background-color: rgb(89, 119, 182) !important;
+            }
+
+        }
+    }
+}

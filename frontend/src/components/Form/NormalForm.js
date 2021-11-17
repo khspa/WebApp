@@ -164,7 +164,7 @@ function NormalForm( {formName, children, w, request} ) {
                 }
                 /* ------------------------------ other errors ------------------------------ */
                 else {  
-                    const target =  document.getElementById(`pop-up-message-${formName}`)
+                    const target =  document.getElementById(`pop-up-message`)
                     ReactDOM.render(<Messages status="warning">{request.fail}: target server not responding</Messages>, target)
                 }
             })

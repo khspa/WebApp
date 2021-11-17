@@ -1,22 +1,24 @@
 @import 'variables.scss';
 
 .alert-box {
-    width: 100%;
-    z-index: 99;
+    width: 0;
     transform: translateY(-300%);
-    left: 0;
     position: fixed;
     @include flex-center(row);
+    z-index: 5;
 }
 
 .warning {
-
     .alert {
         background: #f5d7d7;
         border: 1px ridge rgb(241, 222, 222);
 
         .sign {
             color: rgb(250, 83, 83);
+        }
+
+        span {
+            color: rgb(201, 22, 22);
         }
     }
     
@@ -29,6 +31,10 @@
 
         .sign {
             color: rgb(53, 172, 53);
+        }
+
+        span {
+            color: rgb(34, 134, 47);
         }
     }
 }

@@ -35,7 +35,7 @@ export function Modal({children, messages, button}) {
                 {children}
             </span>
 
-            <div id="simple-modal" className={`modal ${on?"active":"inactive"}`}>
+            <div id="simple-modal" className={`modal ${on?"":"hide"}`}>
                 <div className="modal-content normal" onMouseEnter={handleMouseIn} onMouseLeave={handleMouseOut}>
                     <span className="closeBtn btn" onClick={()=>setOn(false)}>
                         &times;
@@ -82,7 +82,7 @@ export function ModalPopUp({children, button, fontsize}) {
     }
 
     return (
-        <div id="simple-modal" className={`modal ${on?"active":"inactive"}`}>
+        <div id="simple-modal" className={`modal ${on?"show":"hide"}`}>
             <div className="modal-content popup" onMouseEnter={handleMouseIn} onMouseLeave={handleMouseOut} style={{fontSize:fontsize}} >
                 <span className="closeBtn btn" onClick={()=>setOn(false)}> &times; </span>
                 <div className="modal-text">

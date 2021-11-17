@@ -3,8 +3,8 @@
 $contentStyles: space-between, space-around, center, flex-start, flex-end;
 
 .focus {
-  border: 1px solid rgb(61, 137, 207);
-  box-shadow: 0px 0px 6px 1px rgb(89, 175, 255);
+  border: 1px solid rgb(91, 98, 190);
+  box-shadow: 0px 0px 6px 1px rgb(123, 145, 219);
 }
 
 .blur {
@@ -145,7 +145,7 @@ $contentStyles: space-between, space-around, center, flex-start, flex-end;
 
   &:hover {
     cursor: pointer;
-    background-color: rgb(101, 164, 223);
+    background-color: rgb(55, 72, 168);
   }
 }
 

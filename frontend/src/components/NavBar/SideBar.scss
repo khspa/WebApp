@@ -1,0 +1,266 @@
+@import "variables.scss";
+
+
+.sidebar{
+    background-color: rgb(86, 86, 131);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    box-shadow: 0px 0px 10px 2px rgb(99, 98, 110);
+
+    .sidebar-logo {
+        position: absolute;
+        top: 10px;
+        left: 15px;
+        transition: all 0.2s ease-in-out;
+        animation: spin 15s infinite ;
+        animation-timing-function: linear;
+        width: fit-content;
+        height: fit-content;
+        border-radius: 50%;
+        box-shadow: 0px 0px 15px 3px rgb(179, 182, 199);
+ 
+        img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+    }
+
+    .sidebar-items {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        width: 90%;
+        height: 60%;
+
+        .sidebar-item.cur-active {
+
+            &:hover::before {
+                background-color: rgb(56, 55, 126);
+            }
+
+            &::before {
+                opacity: 1;
+            }
+        }
+
+        .sidebar-item {
+            position: relative;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+
+            &::before {
+                transition: all 0.3s ease-in-out;
+                opacity: 0;
+                content: "";
+                position: absolute;
+                bottom: 4px;
+                left: 20px;
+                height: 8px;
+                border-radius: 15px;
+                background-color: white;
+                box-shadow: 0px 0px 15px 2px white;
+            }
+
+            .tooltip {
+                position: absolute;
+                top: -20px;
+                right: -130px;
+                visibility: hidden;
+
+                label {
+                    padding: 10px;
+                    @include flex-center(row);
+                    font-weight: bold;
+                    font-size: 1.35rem;
+                    color: $primaryColor;
+                    box-shadow: 3px 2px 5px 1px rgb(184, 184, 194);
+                }
+            }
+
+            svg {
+                transition: all 0.3s ease-in-out;
+                margin: 0px 12px;
+                font-size: 1.8rem;
+            }
+
+            span {
+                font-weight: bold;
+                transition: all 0.3s ease-in-out;
+                position: absolute;
+                font-size: 1.3rem;
+                left: 45px;
+                opacity: 1;
+            }
+
+            &:hover {
+                border-radius: 12px;
+                background-color: rgb(240, 241, 243);
+                box-shadow: 0 0 40px 2px white;
+                cursor: pointer;
+
+                svg {
+                    color: $primaryColor;
+                }
+
+                span{
+                    color:  $primaryColor;
+                }
+            }
+        }
+    }
+
+    .ex{
+        transition: all 0.3s ease;
+        font-size: 1.7rem;
+        width: 60px;
+        position: absolute;
+        top: 20px;
+        @include flex-center(row);
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.c {
+    width: 55px;
+
+    .sidebar-logo {
+        opacity: 0;
+    }
+
+
+    .sidebar-items{
+        .sidebar-item {
+            span{
+                opacity: 0;
+            }
+
+            &::before {
+                width: 8px;
+            }
+
+            &:hover{
+                .tooltip {
+                    transition: all 0.2s ease-in-out;
+                    visibility: visible;
+                    top: 0px;
+                }
+            }
+        }
+    }
+
+    .ex {
+        right: -3px;
+    }
+}
+
+.o {
+    width: 170px;
+
+    .sidebar-items {
+        .sidebar-item {
+            &::before {
+                height: 2px;
+                bottom: 5px;
+                left: 5px;
+                width: 90%;
+            }
+        }
+    }
+
+    .sidebar-logo {
+        opacity: 1;
+    }
+
+    .ex {
+        right: 0px;
+    }
+}
+
+@media screen and (max-width:650px) {
+    
+    .sidebar {
+        box-shadow: 0 0 0 0 white;
+
+        .sidebar-items {
+            align-items: center;
+            overflow: hidden; 
+
+            .sidebar-item {
+                width: fit-content;
+                justify-content: center;
+                height: 80px;
+
+                .tooltip {
+                    display: none;
+                }
+
+                div {
+                    width: 250px;
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                }
+
+                i {
+                    position: relative;
+                    left: 30px;
+                }
+
+                &::before {
+                    left: 30px;
+                    top: 0px;
+                    position: relative;
+                    width: 15px;
+                    height: 15px;
+                }
+
+                span {
+                    position: relative;
+                    font-size: 1.5rem;
+                }
+                
+                svg {               
+                    font-size: 2.2rem;
+                }
+            }
+        }
+    }
+
+    .o {
+        width: 100vw;
+
+        .ex {
+            transition-delay: 0.3s;
+            font-size: 2rem;   
+            right: 10px;
+            color: white;
+        }
+    }
+
+    .c {
+        left: -80px;
+        width: 0px;
+
+        .ex {
+            transition-delay: 0.3s;
+            font-size: 2rem;
+            right: -140px;
+            color:rgb(56, 55, 126);
+        }
+    }
+
+}

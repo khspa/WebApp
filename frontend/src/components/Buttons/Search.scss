@@ -1,0 +1,42 @@
+@import 'variables.scss';
+
+.search-bx {
+    display:flex;
+    align-items:center;
+    background-color: rgba(92, 125, 175, 0.8);
+    border-radius: 15px;
+    margin: 0px 15px;
+    height: 60%;
+    width: 40px;
+    transition: all 0.3s ease-in-out;
+    justify-content: center;
+
+    
+    svg {
+        width: 40px;
+    }
+
+    &:hover{
+        cursor: pointer;
+    }
+
+    input {
+        caret-color: white;
+        color: white;
+        border: none;
+        outline: none;
+        width: 0%;
+        height: 100%;
+        background-color: transparent;
+        transition: all 0.3s ease-in-out;
+    }
+}
+
+.expand {
+    width: 150px;
+
+    
+    input {
+        width: 70%;
+    }
+}
