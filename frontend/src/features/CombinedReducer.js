@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import { NavigateReducer } from './Reducers';
+import { NavigateReducer, DateRefreshReducer, UserConfigReducer } from './Reducers';
 
 const allReducers = combineReducers({
     page:NavigateReducer,
+    calender:DateRefreshReducer,
+    user:UserConfigReducer,
 })
 
 export default allReducers

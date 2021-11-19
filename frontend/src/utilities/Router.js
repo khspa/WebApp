@@ -11,9 +11,9 @@ function Router({children}) {
     })
 
     return (
-        <div>
+        <>
             {cur}
-        </div>
+        </>
     )
 }
 

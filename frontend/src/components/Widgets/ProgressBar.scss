@@ -1,0 +1,34 @@
+@import "variables.scss";
+
+.progress-bar {
+    width: 80%;
+    height: 50px;
+    position: relative;
+    border-radius: 25px;
+    padding: 10px;
+    background-color: #555;
+
+    span {
+        background-color: #7573e6;
+        display: block;
+        height: 100%;
+        border-radius: 25px;
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-image: -webkit-linear-gradient(
+                linear, 0, 0, 100% 100%, 
+                color-stop(0.25, rgba(255, 255, 255, .2)), 
+                color-stop(0.25, transparent),
+                color-stop(0.5, transparent),
+                color-stop(0.75, rgba(255, 255, 255, .2)),
+            );
+        }
+    }
+}

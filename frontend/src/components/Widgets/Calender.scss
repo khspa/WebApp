@@ -1,0 +1,146 @@
+@import "variables.scss";
+
+$calenderWidth: 200px;
+$calenderHeight: 210px;
+
+.cen-box {
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+    z-index: 5;
+
+    .month-selector {
+        position: absolute;
+        background-color: rgb(255, 255, 255);
+        width: $calenderWidth;
+        border-radius: 25px;
+        top: 0;
+        left: 0;
+        transition: all 0.3s ease-in-out;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 0.5fr repeat(4, 1fr);
+        justify-items: center;
+        align-items: center;
+        height: $calenderHeight;
+    
+        .mt {
+            grid-column: span 3;
+            display: flex;
+            align-items: center;
+            position: relative;
+            bottom: -5px;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    
+        span {
+            transition: all 0.3s ease-in-out;
+            font-weight: bold;
+            color: rgb(12, 3, 97);
+            
+            &:hover {
+                cursor: pointer;
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+    .calender {
+        position: relative;
+        background-color: rgb(255, 255, 255);
+        height: $calenderHeight;
+        width: $calenderWidth;
+        border-radius: 25px;
+        padding: 8px;
+
+        .days {
+            position: relative;
+            top: 12px;
+            height: 150px;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: repeat(7, 1fr);
+            justify-items: center;
+            align-items: center;
+
+            span {
+                font-family: Merriweather;
+            }
+
+            .he {
+                font-size: 0.9rem;
+                color: rgb(172, 128, 223);
+            }
+        }
+
+        .time {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            position: relative;
+            left: 0;
+            top: 10px;
+
+            .month, .year {
+                display: inline-block;
+                font-size: 1.2rem;
+                margin: 0px 3px; 
+            }
+
+            .month {
+                font-weight: 800;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            svg {
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+        }
+
+
+        &::before, &::after{
+            content: "";
+            position: absolute;
+            height: 100%;
+            border-radius: 25px;
+            z-index: -1;
+            
+        }
+
+        &::before {
+            width: 95%;
+            left: 2.5%;
+            background-color: rgb(201, 196, 247);
+            top: 10px;
+        }
+
+        
+        &::after {
+            width: 98%;
+            background-color: rgb(235, 226, 247);
+            top: 5px;
+            left: 1%;
+        }
+    }
+
+}
+
+.op {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.cl {
+    transform: translateX(100%);
+    visibility: hidden;
+    opacity: 0
+}

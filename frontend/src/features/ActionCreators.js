@@ -4,3 +4,16 @@ export const go = (page)=> {
         payload: page,
     }
 }
+
+export const refresh = () => {
+    return {
+        type: "refresh",
+    }
+}
+
+export const initUser = (user) => {
+    return {
+        type: "initialize",
+        payload: user
+    }
+}

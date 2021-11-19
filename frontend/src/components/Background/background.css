@@ -9,10 +9,10 @@
   }
   .box div{
     position:absolute;
-    width:5vw;
-    height:5vw;
+    width:30px;
+    height:30px;
     background: transparent;
-    border:6px solid rgba(70, 6, 173, 0.8);
+    border:6px solid rgba(198, 186, 218, 0.8);
   }
   .box div:nth-child(1){
     top:12%;

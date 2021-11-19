@@ -1,7 +1,4 @@
-import React, { useEffect, useRef } from 'react'
-import { createStore  } from 'redux'
-import allReducer from 'features/CombinedReducer'
-import { Provider } from 'react-redux'
+import React, { useEffect } from 'react'
 import TopNavBar from 'components/NavBar/TopNavBar'
 import SideBar from 'components/NavBar/SideBar'
 import MainLayout from 'components/Layout/MainLayout'
@@ -30,8 +27,9 @@ import Shop from "pages/App/Shop"
 
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { initUser } from "features/ActionCreators"
 
-const store = createStore(allReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 const noti = [
     {name:1, from:<FcAndroidOs/>, message:"AIFT team has sent you an message", date:"02/11/21", status:"read"},
@@ -42,7 +40,8 @@ const noti = [
 function Main() {
 
     const history = useHistory()
-    const ref = useRef()
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.user)
 
     const access = window.localStorage.getItem("access")
 
@@ -57,7 +56,7 @@ function Main() {
         } else {
             axios.get("/api/info/", access_token)
             .then( response => {
-                ref.current.innerHTML = response.data.username
+                dispatch(initUser({username:response.data.username}))
             })
             .catch(error=>{
                 if(error.response.status===401){
@@ -68,7 +67,7 @@ function Main() {
             })
         }
 
-    }, [access, history])
+    }, [access, history, dispatch])
 
     const handleLogout = () => {
         window.localStorage.removeItem("access")
@@ -77,63 +76,61 @@ function Main() {
     }
 
     return (
-        <Provider store={store}>
-            <MainLayout>
-                <MainLayout.Header
-                    navbar={
-                        <TopNavBar 
-                            title="AIFT"
-                            items={[ 
-                                <Search name="search"/>,
-                                <Badge
-                                    name="badge"
-                                    icon={<IoMdNotifications/>}
-                                    data={noti}
-                                />,
-                                <Avatar
-                                    name="avatar"
-                                    icon={<NoIcon name="Wai Yin"/>}
-                                    items={[
-                                        {name:<span ref={ref}></span>, icon:<FaUserAlt/>},
-                                        {name:'settings', icon:<AiTwotoneSetting/>},
-                                        {name:'logout', icon:<ImExit/>, do:handleLogout}
-                                    ]}
-                                />
+        <MainLayout>
+            <MainLayout.Header
+                navbar={
+                    <TopNavBar 
+                        title="AIFT"
+                        items={[ 
+                            <Search name="search"/>,
+                            <Badge
+                                name="badge"
+                                icon={<IoMdNotifications/>}
+                                data={noti}
+                            />,
+                            <Avatar
+                                name="avatar"
+                                icon={<NoIcon name="Wai Yin"/>}
+                                items={[
+                                    {name:user.username, icon:<FaUserAlt/>},
+                                    {name:'settings', icon:<AiTwotoneSetting/>},
+                                    {name:'logout', icon:<ImExit/>, do:handleLogout}
+                                ]}
+                            />
+                        ]}
+                    />
+                }
+            />
+            <MainLayout.Content>
+                <MainLayout.Side 
+                    item={
+                        <SideBar
+                            icon="logo.svg"
+                            items={[
+                                {icon:<FaHome/>, title:"Home"},
+                                {icon:<BsBarChartFill/>, title:"DashBoard"},
+                                {icon:<FaShoppingBag/>, title:"Shop"},
+                                {icon:<BsFillCalculatorFill/>, title:"Calculator"},
+                                {icon:<RiHandCoinFill/>, title:"Repay"},
+                                {icon:<FaQuestionCircle/>, title:"FAQ"},
                             ]}
                         />
                     }
                 />
-                <MainLayout.Content>
-                    <MainLayout.Side 
-                        item={
-                            <SideBar
-                                icon="logo.svg"
-                                items={[
-                                    {icon:<FaHome/>, title:"Home"},
-                                    {icon:<BsBarChartFill/>, title:"DashBoard"},
-                                    {icon:<FaShoppingBag/>, title:"Shop"},
-                                    {icon:<BsFillCalculatorFill/>, title:"Calculator"},
-                                    {icon:<RiHandCoinFill/>, title:"Repay"},
-                                    {icon:<FaQuestionCircle/>, title:"FAQ"},
-                                ]}
-                            />
-                        }
-                    />
-                    <MainLayout.Body>
-                        <BlankPage>
-                            <Router>
-                                <Home/>
-                                <Repay/>
-                                <DashBoard/>
-                                <FAQ/>
-                                <Shop/>
-                                <Calculator/>
-                            </Router>
-                        </BlankPage>
-                    </MainLayout.Body>
-                </MainLayout.Content>
-            </MainLayout>
-        </Provider>
+                <MainLayout.Body>
+                    <BlankPage>
+                        <Router>
+                            <Home/>
+                            <Repay/>
+                            <DashBoard/>
+                            <FAQ/>
+                            <Shop/>
+                            <Calculator/>
+                        </Router>
+                    </BlankPage>
+                </MainLayout.Body>
+            </MainLayout.Content>
+        </MainLayout>
     )
 }
 
