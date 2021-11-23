@@ -1,4 +1,4 @@
-function GetDays(month, year) {
+export function GetDays(month, year) {
 
     const IsToday = (day) => {
         let currDate = new Date()
@@ -31,4 +31,7 @@ function GetDays(month, year) {
     return days
 }
 
-export default GetDays
+export function DaysBetween(start, end) {
+    const difference = end.getTime() - start.getTime()
+    return difference / (1000 * 3600 * 24)
+}

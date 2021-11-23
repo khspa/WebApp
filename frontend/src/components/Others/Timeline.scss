@@ -1,0 +1,140 @@
+@import "variables.scss";
+
+.descript {
+    width: 100%;
+    height: 30px;
+    z-index: 999;
+    overflow-x: hidden;
+    
+    position: relative;
+    margin: 30px 0px;
+    bottom: -10px;
+    
+    .des-wrapper {
+        position: absolute;
+        width: calc(var(--num)*100);
+        height: 100%;
+        display: flex;
+        transition: all 0.5s ease-in-out;
+        transform: translateX(calc(var(--desShift)*-1));
+
+        div {
+            flex: 1;
+            font-size: 1.7rem;
+            color: $primaryColor;
+        }
+    }
+}
+
+.cd-horizontal-timeline {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    top: 10px;
+
+    .forbid {
+        &:hover {
+            cursor: not-allowed !important;
+        }
+    }
+
+    .tl-move {
+        width: 30px;
+        height: 30px;
+        border: 1px solid rgb(165, 164, 164);
+        border-radius: 50%;
+        box-shadow: 12px 0 20px 10px #f4f5fa, -12px 0 20px 10px #f4f5fa;
+        z-index: 999;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+$progressColor: $primaryColor;
+
+.timeline-wrapper {
+    flex: 1;
+    overflow-x: hidden;
+    height: 200%;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .pg {
+        z-index: 1;
+        background-color: $progressColor;
+        width: calc(var(--cur)*1 + 5px);
+        height: 2px;
+        transition: all 0.4s ease-in-out;
+    }
+    
+    .timeline {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        width: 10000px;
+        min-width: 500px;
+        height: 2px;
+        background-color: rgb(189, 186, 186);
+        transition: all 0.5s ease-in-out;
+        transform: translateX(calc(var(--trans)*-1 + 120px));
+
+        .event {
+            left: var(--position);
+            position: absolute;
+            margin: 0 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .dot {
+                position: absolute;
+                width: 13px;
+                height: 13px;
+                border-radius: 50%;
+                background-color: white;
+                z-index: 999;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .finished {
+                border: 2px solid $progressColor;
+            }
+
+            .now {
+                @extend .finished;
+                background-color: $progressColor !important;
+            }
+
+            .ongoing {
+                border: 2px solid rgb(189, 186, 186);
+            }
+
+            .date {
+                position: absolute;
+                top: -30px;
+                left: -20px;
+                color: rgb(114, 113, 113);
+                font-size: 1rem;
+                font-weight: 100;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px){
+    .descript {
+        .des-wrapper {
+            div {
+                font-size: 1.4rem;
+            }
+        }
+    }
+}

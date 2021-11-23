@@ -1,15 +1,27 @@
 import React from 'react'
 import "./style.scss"
 import Calender from 'components/Widgets/Calender'
-import WidgetBox from 'components/Widgets/WidgetBox'
+import {WidgetBox, WidgetBox2} from 'components/Widgets/WidgetBox'
 import InfoSheet from 'components/Widgets/InfoSheet'
 import { BsFillCalendarDateFill } from "react-icons/bs"
 import { refresh } from "features/ActionCreators"
 import { useSelector, useDispatch } from "react-redux"
 import ProgressBar from 'components/Widgets/ProgressBar'
 import WelcomeText from "components/Text/WelcomeText"
+import Timeline from "components/Others/Timeline"
+import { initTimeline } from "features/ActionCreators"
 
 const importantDates = [ new Date(2021, 11, 0), new Date(2021, 12, 0)]
+const totalLend = 16100
+const currentBalance = 4560
+const nextPayment = 1200
+const applicationProgress = [
+    {date:new Date(2021, 10, 3), event:"Form submission",  progress:"finished"},
+    {date:new Date(2021, 10, 6), event:"Background check", progress:"finished"},
+    {date:new Date(2021, 10, 12), event:"Application reviewing", progress:"now"},
+    {date:new Date(2021, 10, 19), event:"Final decision", progress:"ongoing"},
+    {date:new Date(2021, 10, 22), event:"Cash delivery", progress:"ongoing"},
+]
 
 function Home() {
 
@@ -17,12 +29,10 @@ function Home() {
     const dispatch = useDispatch()
     const today = new Date()
 
-    console.log(user)
-
     return (
         <div className="home">
             <div className="bx large">
-                <WidgetBox >
+                <WidgetBox>
                     <WelcomeText pic="dreamer.svg" subtitle={user.username}>
                         Welcome Back
                     </WelcomeText>
@@ -46,13 +56,24 @@ function Home() {
                 </WidgetBox> 
             </div>
             <div className="bx regular">
-                <ProgressBar/>
+                <WidgetBox2 w="100%" h="100%" 
+                    title={<h2> Payment Progress </h2>}
+                    footer={<button>Pay Now</button>}
+                >
+                    <ProgressBar total={totalLend} current={currentBalance}/>
+                    <h2 className="p">Next payment: ${nextPayment} by {importantDates[0].getDate()}/{importantDates[0].getMonth()+1}</h2>
+                </WidgetBox2>
             </div>
             <div className="bx regular">
-                Application
+                <WidgetBox2 w="100%" h="100%"
+                    title={<h2> Application </h2>}
+                    footer={<button onClick={()=>dispatch(initTimeline())}>Current</button>}
+                >
+                    <Timeline events={applicationProgress}/>
+                </WidgetBox2>
             </div>
             <div className="bx regular">
-                Promontion
+                Promotion
             </div>
             <div className="bx regular">
                 My Records

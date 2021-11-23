@@ -1,17 +1,30 @@
 @import "variables.scss";
 
+.progress {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    .percentage {
+        color: $primaryColor;
+        font-size: 2.2rem;
+    }
+}
+
 .progress-bar {
-    width: 80%;
+    width: 100%;
     height: 50px;
     position: relative;
     border-radius: 25px;
     padding: 10px;
     background-color: #555;
+    margin-right: 15px;
 
     span {
         background-color: #7573e6;
         display: block;
         height: 100%;
+        width: var(--progress);
         border-radius: 25px;
         position: relative;
 
@@ -22,13 +35,55 @@
             left: 0;
             bottom: 0;
             right: 0;
-            background-image: -webkit-linear-gradient(
-                linear, 0, 0, 100% 100%, 
+            background-image: -webkit-gradient(
+                linear, 0 0, 100% 100%, 
                 color-stop(0.25, rgba(255, 255, 255, .2)), 
                 color-stop(0.25, transparent),
                 color-stop(0.5, transparent),
+                color-stop(0.5, rgba(255, 255, 255, .2)), 
                 color-stop(0.75, rgba(255, 255, 255, .2)),
+                color-stop(0.75, transparent), to(transparent)
             );
+            
+            background-size: 50px 50px;
+            animation: move 60s linear infinite;
+            border-radius: 25px;
+        }
+    }
+
+}
+
+@keyframes move {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: calc(var(--progress)*60) calc(var(--progress)*60);
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .progress {
+        flex-direction: column;
+        justify-content: space-evenly;
+        height: 100%;
+
+        .progress-bar {
+            height: 35px;
+        }
+
+        .percentage {
+            font-size: 1.5rem;
+            order: -1;
+        }
+    }
+
+    @keyframes move {
+        0% {
+            background-position: 0 0;
+        }
+        100% {
+            background-position: calc(var(--progress)*550) calc(var(--progress)*550);
         }
     }
 }

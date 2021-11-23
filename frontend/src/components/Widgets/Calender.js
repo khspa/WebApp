@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from 'react'
 import "./Calender.scss"
 import { GoTriangleLeft, GoTriangleRight } from "react-icons/go"
-import GetDays from "utilities/date"
+import { GetDays } from "utilities/date"
 import { AiOutlineRollback } from "react-icons/ai"
 import { useSelector } from 'react-redux'
 

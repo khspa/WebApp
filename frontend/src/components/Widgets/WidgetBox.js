@@ -1,7 +1,8 @@
 import React from 'react'
 import "./WidgetBox.scss"
+import { AiFillQuestionCircle } from "react-icons/ai"
 
-function WidgetBox({children, w, h}) {
+export function WidgetBox({children, w, h}) {
     return (
         <div className="w-box" style={{width: w, height: h}}>
             {children}
@@ -9,4 +10,14 @@ function WidgetBox({children, w, h}) {
     )
 }
 
-export default WidgetBox
+export function WidgetBox2({title, children, footer}) {
+    return (
+        <div className="w-box fullsize ver">
+            <div className="sup"><AiFillQuestionCircle/></div>
+            <div className="title">{title}</div>
+            <div className="content">{children}</div>
+            <div className="bottom">{footer}</div>
+        </div>
+    )
+}
+

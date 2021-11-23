@@ -17,3 +17,9 @@ export const initUser = (user) => {
         payload: user
     }
 }
+
+export const initTimeline = () => {
+    return {
+        type:"reset"
+    }
+}

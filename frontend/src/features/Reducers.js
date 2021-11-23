@@ -24,3 +24,12 @@ export const UserConfigReducer = (state = {}, action) => {
             return state
     }
 }
+
+export const ResetTimeLineReducer = (state = false, action) => {
+    switch (action.type) {
+        case "reset":
+            return !state
+        default:
+            return state
+    }
+}
