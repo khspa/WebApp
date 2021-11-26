@@ -24,6 +24,7 @@
         background-color: #7573e6;
         display: block;
         height: 100%;
+        transition: all 0.5s ease-in-out;
         width: var(--progress);
         border-radius: 25px;
         position: relative;
@@ -58,7 +59,7 @@
         background-position: 0 0;
     }
     100% {
-        background-position: calc(var(--progress)*60) calc(var(--progress)*60);
+        background-position: 300px 300px;
     }
 }
 
@@ -75,15 +76,6 @@
         .percentage {
             font-size: 1.5rem;
             order: -1;
-        }
-    }
-
-    @keyframes move {
-        0% {
-            background-position: 0 0;
-        }
-        100% {
-            background-position: calc(var(--progress)*550) calc(var(--progress)*550);
         }
     }
 }

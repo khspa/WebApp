@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Transaction, Loan, Product
 
-# Register your models here.
+admin.site.register(Transaction)
+admin.site.register(Loan)
+admin.site.register(Product)

@@ -33,3 +33,12 @@ export const ResetTimeLineReducer = (state = false, action) => {
             return state
     }
 }
+
+export const PaymentReducer = ( state = {}, action ) => {
+    switch (action.type) {
+        case "set":
+            return action.payload
+        default:
+            return state
+    }
+}

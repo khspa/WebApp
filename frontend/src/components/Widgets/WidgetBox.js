@@ -21,3 +21,10 @@ export function WidgetBox2({title, children, footer}) {
     )
 }
 
+export function WidgetBox3({children}) {
+    return (
+        <div className="w-box fullsize ver">
+            {children}
+        </div>
+    )
+}

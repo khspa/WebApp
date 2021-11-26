@@ -23,3 +23,10 @@ export const initTimeline = () => {
         type:"reset"
     }
 }
+
+export const setPayment = (payment) => {
+    return {
+        type: "set",
+        payload: payment
+    }
+}
