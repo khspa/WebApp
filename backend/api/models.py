@@ -33,7 +33,8 @@ class Product(models.Model):
         max_length = 1,
         choices = LOAN_TYPE,
     )
-    max_amount = models.IntegerField()
+    min_amount = models.IntegerField(default=0)
+    max_amount = models.IntegerField(default=0)
     max_duration = models.DurationField()
     interest_rate = models.DecimalField(max_digits=10, decimal_places=5)
 
